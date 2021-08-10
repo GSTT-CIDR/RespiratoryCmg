@@ -1,19 +1,16 @@
-
-SAMPLES, = glob_wildcards("results/files/{samples}.fastq")
-
-rule human_map:
+rule human_reads:
     input:
-        rules.move.output.analysis
+        "results/{sample}/{time}_minutes/files/"
     output:
-        mapped = "results/hg38/human_mapped.sam"
+        "results/{sample}/{time}_minutes/host/host_mapped.sam"
     shell:
-        "minimap2 -x map-ont --secondary no -a {config[parameters][hg38][index]} {input}/*.fastq > {output}"
+        "minimap2 -x map-ont --secondary no -a {config[parameters][hg38][index]} {input}*.fastq > {output}"
 
 rule micro_fastq:
     input:
-        rules.human_map.output.mapped
+        "results/{sample}/{time}_minutes/host/host_mapped.sam"
     output:
-        micro_reads = "results/microbial/hg38_unmapped.fastq"
+        micro_reads = "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
     shell:
         "samtools fastq -f 4 {input} > {output}"
 

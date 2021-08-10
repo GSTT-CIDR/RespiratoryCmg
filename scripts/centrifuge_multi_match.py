@@ -6,49 +6,39 @@ import taxonomy
 from collections import Counter
 import json
 
-
-# #### Revise this bit - especially tax_dict
-# def argument_parser():
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("--centrifuge", "-c",
-#                         required=True,
-#                         action="store",
-#                         help="centrifuge classification results file")
-#     parser.add_argument("--fasta", "-f",
-#                         required=True,
-#                         action="store",
-#                         help="fasta file corresponding to centrifuge run")
-#     parser.add_argument("--nodes",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/taxdmp_2020-04-01/nodes.dmp",
-#                         help="Taxonomy nodes file")
-#     parser.add_argument("--names",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/taxdmp_2020-04-01/names.dmp",
-#                         help="Taxonomy names file")
-#     parser.add_argument("--genome_dir",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/refseq_genomes/",
-#                         help="Path to directory of reference genomes")
-#     parser.add_argument("--species_file_names",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/1-Project/2-metagenomics/notebooks/metag_assembly_data.txt",
-#                         help="")
-#     parser.add_argument("--species_tax_meta",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/metag_assembly_summary.txt",
-#                         help="")
-#     parser.add_argument("--output", "-o",
-#                         action="store",
-#                         default="report.csv",
-#                         help="File name for output")
-#
-#     return parser
+# SNAKEMAKE ARGUMENTS
+NODES = snakemake.config["taxonomy"]["nodes"]
+NAMES = snakemake.config["taxonomy"]["names"]
+CENTRIFUGE_FILE = snakemake.input.file
+TAXMETA = snakemake.config["taxonomy"]["speciesTaxMeta"]
+FILENAMES = snakemake.config["taxonomy"]["speciesFileNames"]
+FASTA = snakemake.input.fasta
+GENOME_DIR = snakemake.config["taxonomy"]["refseqDir"]
+MULTI_OUTPUT = snakemake.output.multi
+FAILED_OUTPUT = snakemake.output.failed
+READ_OUTPUT = snakemmake.output.read
+REPORT_OUTPUT = snakemake.output.report
 
 
 def remove_low_qual_reads(df, threshold = 300):
     """
-    Remove hits below the threhold and collects readIDs of failed reads
+    Filters reads with scores below the designated threshold.
+
+    Parameters
+    ----------
+    df
+        centrifuge output as pandas DataFrame
+    threshold
+        centrifuge score threshold for false positive reads. Default: 300
+
+    Returns
+    -------
+    above_threshold
+        centrifuge dataframe with reads above score threshold
+    failed
+        dictionary of failed reads due to low score
+        {readID: {alignment: False, reason: score below threshold}}
+
     """
     above_threshold = df[df["score"] > threshold]
     rejected_reads = df[df["score"] < threshold]["readID"].unique()
@@ -57,7 +47,19 @@ def remove_low_qual_reads(df, threshold = 300):
 
 
 def species_id(taxID, tax, rank = "species"):
-    """checks if taxID is a below species rank and returns its species ID"""
+    """
+    checks if taxID is a below taxonomy rank specified and returns that rank.
+
+    Parameters
+    ----------
+    taxID
+    tax
+    rank
+
+    Returns
+    -------
+
+    """
     taxobj = tax.parent(str(taxID), at_rank = rank)
     if taxobj is None:
         return tax.node(str(taxID))
@@ -83,13 +85,15 @@ def split_hits(df, tax):
     Also filters out reads below threshold
     Parameters
     ----------
-    dataFrame
+    df
         centrifuge output as pandas DataFrame object
+    tax
+        taxonomy object from module taxonomy
     Returns
     -------
     unique_dict
         dictionary in format;  {readID: taxID}
-    multi_dicy
+    multi_dict
         dictionary in format; {readID:[taxIDs]}
     """
 
@@ -119,7 +123,7 @@ def split_hits(df, tax):
     return unique_dict, multi_dict
 
 
-def create_fasta_dict(fasta = snakemake.input.fasta):
+def create_fasta_dict(fasta)
     fasta_dict = {}
     for name, seq, qual in mp.fastx_read(fasta, read_comment=False):
         fasta_dict[name] = seq
@@ -210,10 +214,10 @@ def pick_best_alignment(align_dict):
 def main():
     start = time.time()
     print("loading data")
-    tax = taxonomy.Taxonomy.from_ncbi(snakemake.config["taxonomy"]["nodes"], snakemake.config["taxonomy"]["names"])
-    df = pd.read_csv(snakemake.input.file, sep="\t")
-    taxDict = create_tax_dict(snakemake.config["taxonomy"]["speciesTaxMeta"], snakemake.config["taxonomy"]["speciesFileNames"])
-    fasta_dict = create_fasta_dict()
+    tax = taxonomy.Taxonomy.from_ncbi(NODES, NAMES)
+    df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
+    taxDict = create_tax_dict(TAXMETA, FILENAMES)
+    fasta_dict = create_fasta_dict(FASTA)
 
     print("data loaded.... starting counts")
 
@@ -227,7 +231,7 @@ def main():
         fasta = get_fasta(key, fasta_dict)
         taxIDs = [int(t.id) for t in value]
         try:
-            multi_res[key] = get_read_alignments(taxIDs, snakemake.config["taxonomy"]["refseqDir"], taxDict, fasta, tax)
+            multi_res[key] = get_read_alignments(taxIDs, GENOME_DIR, taxDict, fasta, tax)
         except KeyError:
             failed[key] = taxIDs
 
@@ -241,11 +245,11 @@ def main():
     print("writing files")
     
     # Mutli match read assignments
-    with open(snakemake.output.multi, "w") as f:
+    with open(MULTI_OUTPUT, "w") as f:
         json.dump(multi_res, f)
     
     # Failed reads
-    with open(snakemake.output.failed, "w") as f:
+    with open(FAILED_OUTPUT, "w") as f:
         json.dump(failed, f)
     
     # Read assignments
@@ -253,7 +257,7 @@ def main():
     read_df.columns = ["readID", "TaxID"]
     read_df["TaxID"] = read_df["TaxID"].apply(lambda x: x.id if (x is not None) else "NA")
     read_df["Organism"] = read_df["TaxID"].apply(lambda x: get_name(x,tax)) ## swap around
-    read_df.to_csv(snakemake.output.read, index=False, sep="\t")
+    read_df.to_csv(READ_OUTPUT, index=False, sep="\t")
     
     
     
@@ -268,7 +272,7 @@ def main():
     report_df["Percentage"] = report_df["Counts"] / total_counts * 100
     report_df = report_df.sort_values(by="Percentage", ascending=False)
     report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
-    report_df.to_csv(snakemake.output.report, index=False, sep="\t")
+    report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
 
 
     end = time.time()

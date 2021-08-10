@@ -7,43 +7,7 @@ from collections import Counter
 import json
 
 
-# #### Revise this bit - especially tax_dict
-# def argument_parser():
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("--centrifuge", "-c",
-#                         required=True,
-#                         action="store",
-#                         help="centrifuge classification results file")
-#     parser.add_argument("--fasta", "-f",
-#                         required=True,
-#                         action="store",
-#                         help="fasta file corresponding to centrifuge run")
-#     parser.add_argument("--nodes",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/taxdmp_2020-04-01/nodes.dmp",
-#                         help="Taxonomy nodes file")
-#     parser.add_argument("--names",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/taxdmp_2020-04-01/names.dmp",
-#                         help="Taxonomy names file")
-#     parser.add_argument("--genome_dir",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/refseq_genomes/",
-#                         help="Path to directory of reference genomes")
-#     parser.add_argument("--species_file_names",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/1-Project/2-metagenomics/notebooks/metag_assembly_data.txt",
-#                         help="")
-#     parser.add_argument("--species_tax_meta",
-#                         action="store",
-#                         default="/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/metag_assembly_summary.txt",
-#                         help="")
-#     parser.add_argument("--output", "-o",
-#                         action="store",
-#                         default="report.csv",
-#                         help="File name for output")
-#
-#     return parser
+
 
 
 def remove_low_qual_reads(df, threshold = 300):
