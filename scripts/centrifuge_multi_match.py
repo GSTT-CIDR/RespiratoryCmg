@@ -16,7 +16,7 @@ FASTA = snakemake.input.fasta
 GENOME_DIR = snakemake.config["taxonomy"]["refseqDir"]
 MULTI_OUTPUT = snakemake.output.multi
 FAILED_OUTPUT = snakemake.output.failed
-READ_OUTPUT = snakemmake.output.read
+READ_OUTPUT = snakemake.output.read
 REPORT_OUTPUT = snakemake.output.report
 
 

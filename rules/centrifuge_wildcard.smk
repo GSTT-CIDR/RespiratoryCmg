@@ -20,7 +20,7 @@ rule parse_centrifuge:
         fasta = "files/{sample}.fastq"
     output:
         report = "results/{sample}/centrifuge/centrifuge_report.tsv",
-        read = "results/{sample}/centrifuge/read_assignemnts.tsv",
+        read = "results/{sample}/centrifuge/read_assignments.tsv",
         failed = "results/{sample}/centrifuge/failed_reads.json",
         multi = "results/{sample}/centrifuge/multi_read.json"
     # conda:
