@@ -263,6 +263,7 @@ def main():
     
     
     report_values = Counter([int(i.id) for i in report_dict.values()])
+    del report_values[9606]
     total_counts = sum(report_values.values())
 
     #Report output
