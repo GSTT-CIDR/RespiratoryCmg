@@ -6,6 +6,19 @@ import taxonomy
 from collections import Counter
 import json
 
+# SNAKEMAKE ARGUMENTS
+NODES = snakemake.config["taxonomy"]["nodes"]
+NAMES = snakemake.config["taxonomy"]["names"]
+CENTRIFUGE_FILE = snakemake.input.file
+TAXMETA = snakemake.config["taxonomy"]["speciesTaxMeta"]
+FILENAMES = snakemake.config["taxonomy"]["speciesFileNames"]
+FASTA = snakemake.input.fasta
+GENOME_DIR = snakemake.config["taxonomy"]["refseqDir"]
+MULTI_OUTPUT = snakemake.output.multi
+FAILED_OUTPUT = snakemake.output.failed
+READ_OUTPUT = snakemmake.output.read
+REPORT_OUTPUT = snakemake.output.report
+THRESHOLD = snakemake.wildcards.thresholds
 
 
 
@@ -171,9 +184,9 @@ def main():
     fasta_dict = create_fasta_dict()
 
     print("data loaded.... starting counts")
-    print("Threshold is set to: {}".format(snakemake.wildcards.thresholds))
+    print("Threshold is set to: {}".format(THRESHOLD))
 
-    above_threshold, failed = remove_low_qual_reads(df, int(snakemake.wildcards.thresholds))
+    above_threshold, failed = remove_low_qual_reads(df, int(THRESHOLD))
     report_dict, multi_hit_dict = split_hits(above_threshold, tax)
 
     print("Starting multi-match resolution")
@@ -183,7 +196,7 @@ def main():
         fasta = get_fasta(key, fasta_dict)
         taxIDs = [int(t.id) for t in value]
         try:
-            multi_res[key] = get_read_alignments(taxIDs, snakemake.config["taxonomy"]["refseqDir"], taxDict, fasta, tax)
+            multi_res[key] = get_read_alignments(taxIDs, GENOME_DIR, taxDict, fasta, tax)
         except KeyError:
             failed[key] = taxIDs
 
@@ -196,24 +209,36 @@ def main():
 
     print("writing files")
 
-    with open(snakemake.output.failed, "w") as f:
+    # Mutli match read assignments
+    with open(MULTI_OUTPUT, "w") as f:
+        json.dump(multi_res, f)
+
+    # Failed reads
+    with open(FAILED_OUTPUT, "w") as f:
         json.dump(failed, f)
+
+    # Read assignments
+    read_df = pd.DataFrame.from_dict(report_dict, orient="index").reset_index()
+    read_df.columns = ["readID", "TaxID"]
+    read_df["TaxID"] = read_df["TaxID"].apply(lambda x: x.id if (x is not None) else "NA")
+    read_df["Organism"] = read_df["TaxID"].apply(lambda x: get_name(x, tax))  ## swap around
+    read_df.to_csv(READ_OUTPUT, index=False, sep="\t")
 
     report_values = Counter([int(i.id) for i in report_dict.values()])
     total_counts = sum(report_values.values())
 
-    #Report output
+    # Report output
     report_df = pd.DataFrame.from_dict(report_values, orient="index").reset_index()
     report_df.columns = ["Tax_ID", "Counts"]
     report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name)
     report_df["Percentage"] = report_df["Counts"] / total_counts * 100
     report_df = report_df.sort_values(by="Percentage", ascending=False)
     report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
-    report_df.to_csv(snakemake.output.report, index=False, sep="\t")
-
+    report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
 
     end = time.time()
     print("Time to run is {} seconds".format(end - start))
+
 
 if __name__ == "__main__":
     main()
