@@ -43,6 +43,15 @@ def species_id(taxID, tax, rank = "species"):
     return None
 
 
+def get_name(taxID, tax):
+    name = tax.node(str(taxID))
+    if name is None:
+        name = "NA"
+        return name
+    else:
+        return name.name
+
+
 def split_hits(df, tax):
     """
     Split centrifuge output into two categories: Unique hits and multi-match hits.
@@ -87,7 +96,7 @@ def split_hits(df, tax):
     return unique_dict, multi_dict
 
 
-def create_fasta_dict(fasta = snakemake.input.fasta):
+def create_fasta_dict(fasta = FASTA):
     fasta_dict = {}
     for name, seq, qual in mp.fastx_read(fasta, read_comment=False):
         fasta_dict[name] = seq
