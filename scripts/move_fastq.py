@@ -7,10 +7,11 @@ import shutil
 
 TIME= int(snakemake.wildcards.time)
 FQ_DIR = snakemake.input.seq_dir
-OUT_DIR = snakemake.output.analysis
+OUT_FILE = snakemake.output.analysis
 
 
-def move_files(fq_dir=".", end_dir="results/files/"):
+## Change to check for time intervals
+def move_files(fq_dir=".", out_file="results/files/"):
     """
     Moves fastq files from sequencing results folder to analysis folders
     Parameters
@@ -24,9 +25,13 @@ def move_files(fq_dir=".", end_dir="results/files/"):
 
     """
     file_names = os.listdir(fq_dir)
-    for f in file_names:
-        if f.endswith(".fastq"):
-            shutil.copy(os.path.join(fq_dir, f), end_dir)
+    print(file_names)
+    with open(out_file, "wb") as of:
+        for f in file_names:
+            if f.endswith(".fastq"):
+                f_path = str(os.path.join(fq_dir, f))
+                with open(f_path, "rb") as fi:
+                    shutil.copyfileobj(fi, of)
     return file_names
 
 
@@ -40,11 +45,11 @@ def main():
         if datetime.now() > end_time:
             # move_files(config["fastq_dir"])
             print("Moving Files")
-            log = move_files(fq_dir=FQ_DIR, end_dir = OUT_DIR)
+            log = move_files(fq_dir=FQ_DIR, out_file = OUT_FILE)
             still_run = False
-    # with open(snakemake.log[0], "w") as f:
-    #     for item in log:
-    #         f.write("%s\n" % item)
+    with open(snakemake.log[0], "w") as f:
+        for item in log:
+            f.write("%s\n" % item)
 
 
 if __name__ == "__main__":
