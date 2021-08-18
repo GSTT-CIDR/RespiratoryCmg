@@ -1,5 +1,4 @@
 parameters:
-  time: 1
   hg38:
     index: "ref/hg38/hg38.mmi"
   dir: "Test"

@@ -1,4 +1,4 @@
-SAMPLES, = glob_wildcards("files/{sample}.fastq")
+#SAMPLES, = glob_wildcards("files/{sample}.fastq")
 
 
 rule run_centrifuge:
