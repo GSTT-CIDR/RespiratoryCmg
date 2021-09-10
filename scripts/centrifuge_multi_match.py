@@ -123,7 +123,7 @@ def split_hits(df, tax):
     return unique_dict, multi_dict
 
 
-def create_fasta_dict(fasta)
+def create_fasta_dict(fasta):
     fasta_dict = {}
     for name, seq, qual in mp.fastx_read(fasta, read_comment=False):
         fasta_dict[name] = seq

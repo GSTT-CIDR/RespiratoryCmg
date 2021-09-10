@@ -6,4 +6,4 @@ rule move:
     log:
         "results/{sample}/{time}_minutes/log/file_move.log"
     script:
-        "../scripts/move_fastq.py"
+        "../scripts/transfer_reads.py"
