@@ -2,26 +2,23 @@ import pandas as pd
 import glob
 import time
 
-configfile: "config_grid.yaml"
+configfile: "config.yaml"
 
 def find_path(dir, barcode):
-    if int(barcode) < 10:
-         barcode = "0{}".format(barcode)
-    else:
-        barcode = str(barcode)
-    path = glob.glob("/data/{}/**/fastq_pass/barcode{}/".format(dir,barcode), recursive=True)
+    # Work on new method for this bit    
+    path = glob.glob("/data/{}/**/fastq_pass/barcode*{}/".format(dir,barcode), recursive=True)
     #path = glob.glob("{}/{}".format(dir,barcode))
     return str(path[0])
 
-print("waiting 5 minutes before running")
-time.sleep(300)
+print("waiting 1 minute before running")
+time.sleep(60)
 
-sample_table = pd.read_csv("ref/sample_table.csv").set_index("Sample")
+sample_table = pd.read_csv("ref/sample_table.tsv", sep="\t").set_index("Sample")
 sample_table["path"] = sample_table.apply(lambda x: find_path(x.Directory, x.Barcode), axis = 1)
 
 SAMPLES = sample_table.index.values
 
-TIME = [30,120,960]
+TIME = [120]
 
 print(SAMPLES, TIME)
 

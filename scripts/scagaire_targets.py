@@ -2,7 +2,7 @@ import pandas as pd
 
 df = pd.read_csv(snakemake.input[0], sep="\t")
 top_hits = set(df[df["Percentage"] > 1]["Organism"])
-scagaire_file = snakemake.config["scagaire"]
+scagaire_file = snakemake.config["amr"]["scagaire"]
 with open(scagaire_file, "r") as f:
     scagaire_genes = {line.rstrip() for line in f}
 
