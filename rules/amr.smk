@@ -36,10 +36,4 @@ rule scagaire:
         """
         t=$(cat {input.top_hit} | paste -sd "," -)
         scagaire "$t" {input.amr_res} -s {output.summary} -o {output.report}
-        if [ ! -f "{output.summary}" ]; then
-            echo "No species in database" > {output.summary}
-            cp {config[amr][template]} {output.report}
-        fi
         """
-
-
