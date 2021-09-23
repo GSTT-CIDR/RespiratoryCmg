@@ -5,13 +5,25 @@ import re
 from weasyprint import HTML, CSS
 from datetime import datetime
 
-RESULTS_DIR = "../../Validation/August_september_2021/results/160921_validation_run4_sample15/120_minutes/"
-SAMPLE = "John Hancock"
+# RESULTS_DIR = "../../Validation/August_september_2021/results/160921_validation_run4_sample15/120_minutes/"
+# SAMPLE = "John Hancock"
+# INTERVAL = 2
+# CFG_PATH = RESULTS_DIR + "centrifuge/centrifuge_report.tsv"
+# AMR_SUMMARY = RESULTS_DIR + "amr/scagaire_gene_summary.tsv"
+# AMR_REPORT = RESULTS_DIR + "amr/scagaire_report.tsv"
+# QC_PATH = RESULTS_DIR + "qc/nanostat_summary.txt"
+
+# RESULTS_DIR = "../../Validation/August_september_2021/results/160921_validation_run4_sample15/120_minutes/"
+SAMPLE = snakemake.wildcards.sample
 INTERVAL = 2
-CFG_PATH = RESULTS_DIR + "centrifuge/centrifuge_report.tsv"
-AMR_SUMMARY = RESULTS_DIR + "amr/scagaire_gene_summary.tsv"
-AMR_REPORT = RESULTS_DIR + "amr/scagaire_report.tsv"
-QC_PATH = RESULTS_DIR + "qc/nanostat_summary.txt"
+CFG_PATH = snakemake.input.centrifuge
+AMR_SUMMARY = snakemake.input.amr_summary
+AMR_REPORT = snakemake.input.amr_report
+QC_PATH = snakemake.input.qc
+OUTPUT = snakemake.output
+REPORT_HTML = snakemake.config["pdf"]["html"]
+REPORT_CSS = snakemake.config["pdf"]["css"]
+BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
 
 
 def convert_bp(size):
@@ -62,6 +74,10 @@ def amr_summary(path):
 
 
 def amr_report(path):
+    with open(path, "r") as f:
+        dat = f.readline().strip()
+        if dat.startswith("No results"):
+            return dat
     df = pd.read_csv(path, sep="\t", usecols=["SEQUENCE", "START", "END", "GENE", "%COVERAGE"])
     return df.to_html(classes="table table-striped", border=0, justify="left", index=False)
 
@@ -76,13 +92,13 @@ report_dict["amr_summary"] = amr_summary(AMR_SUMMARY)
 report_dict["amr_report"] = amr_report(AMR_REPORT)
 
 
-env = Environment(loader=FileSystemLoader("../"))
+env = Environment(loader=FileSystemLoader("."))
 # declare our jinja template
-template = env.get_template("ref/Template/report_template.html")
+template = env.get_template(REPORT_HTML)
 
 html_out = template.render({"report": report_dict})
 
-pdf_name = "../results/report_testing.pdf"
+pdf_name = OUTPUT
 HTML(string=html_out).write_pdf(pdf_name,
-                                stylesheets=[CSS("../ref/Template/report.css"),
-                                             CSS("../ref/Template/bootstrap.css")])
+                                stylesheets=[CSS(REPORT_CSS),
+                                             CSS(BOOTSTRAP_CSS)])

@@ -12,6 +12,10 @@ taxonomy:
 amr:
   scagaire: "ref/scagaire_genes.txt"
   template: "ref/scagaire_template.txt"
+pdf:
+  html: "ref/Template/report_template.html"
+  css: "ref/Template/report.css"
+  bootstrap: "ref/Template/bootstrap.css"
     
 
 
