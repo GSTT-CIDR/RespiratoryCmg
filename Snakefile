@@ -13,7 +13,7 @@ def find_path(dir, barcode):
 # print("waiting 1 minute before running")
 # time.sleep(60)
 
-sample_table = pd.read_csv("ref/sample_table.tsv", sep="\t").set_index("Sample")
+sample_table = pd.read_csv(config["samples"], sep="\t").set_index("Sample")
 #sample_table["path"] = sample_table.apply(lambda x: find_path(x.Directory, x.Barcode), axis = 1)
 
 SAMPLES = sample_table.index.values
@@ -27,7 +27,7 @@ include: "rules/host_remove.smk"
 include: "rules/centrifuge.smk"
 include: "rules/amr.smk"
 include: "rules/qc.smk"
-include: "rule/report.smk"
+include: "rules/report.smk"
 
 
 rule all:

@@ -1,4 +1,5 @@
 parameters:
+  samples: "ref/sample_table.tsv"
   hg38:
     index: "ref/hg38/hg38.mmi"
   centrifuge:
