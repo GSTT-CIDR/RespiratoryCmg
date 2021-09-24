@@ -25,7 +25,6 @@ def move_files(fq_dir=".", out_file="results/files/"):
 
     """
     file_names = os.listdir(fq_dir)
-    print(file_names)
     with open(out_file, "wb") as of:
         for f in file_names:
             if f.endswith(".fastq"):

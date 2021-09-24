@@ -1,17 +1,21 @@
 parameters:
   hg38:
-    index: "/Users/alderc/1-projects/12-GSTT/2-Data/1-Ref/hg38.mmi"
-  dir: "Test"
+    index: "ref/hg38/hg38.mmi"
   centrifuge:
-    index: "/Users/alderc/1-projects/12-GSTT/1-Project/2-metagenomics/Pilot/index_hpvc/hpvc"
-    tree: "/Users/alderc/1-projects/12-GSTT/1-Project/2-metagenomics/Pilot/index_hpvc/hpvc.tree"
-    names: "/Users/alderc/1-projects/12-GSTT/1-Project/2-metagenomics/Pilot/index_hpvc/hpvc.names"
+    index: "ref/Cmg_index/Cmg"
 taxonomy:
-  names: "/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/taxdmp_2020-04-01/names.dmp"
-  nodes: "/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/taxdmp_2020-04-01/nodes.dmp"
-  refseqDir: "/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/refseq_genomes/"
-  speciesFileNames: "ref/metag_assembly_data.txt"
-  speciesTaxMeta: "/Users/alderc/1-projects/12-GSTT/2-Data/Taxonomy/metag_assembly_summary.txt"
-scagaire: "ref/scagaire_genes.txt"
+  names: "ref/refseq/taxonomy/names.dmp"
+  nodes: "ref/refseq/taxonomy/nodes.dmp"
+  refseqDir: "ref/refseq/Genomes/"
+  speciesFileNames: "ref/refseq/Assembly_summary/metag_filepaths.txt"
+  speciesTaxMeta: "ref/refseq/Assembly_summary/combined_assembly_summary.txt"
+amr:
+  scagaire: "ref/scagaire_genes.txt"
+  template: "ref/scagaire_template.txt"
+pdf:
+  html: "ref/Template/report_template.html"
+  css: "ref/Template/report.css"
+  bootstrap: "ref/Template/bootstrap.css"
+    
 
 

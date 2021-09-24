@@ -1,0 +1,43 @@
+@page {
+    size: A4;
+    @top-left {
+      background: #476efb;
+      content: 'Clinical Metagenomics Report';
+      font-size: large;
+      font-weight: bolder;
+      height: 2cm;
+      opacity: .75;
+      text-align: center;
+      width: 10cm; }
+    @top-center {
+      background: #476efb;
+      content: '';
+      display: block;
+      height: .05cm;
+      opacity: .5;
+      width: 100%; }
+    @top-right {
+      content: string(date);
+      font-size: 10pt;
+      height: 1cm;
+      vertical-align: middle;
+      width: 100%; } }
+
+html body div#date {
+    visibility: hidden;
+    font-size: 4pt;
+    string-set: date content();
+}
+html body h4 {
+  padding: 20px 0 20px 0;
+}
+html body h4.new-page{
+  break-before: always;
+}
+html body h5 {
+  padding: 10px 0 10px 0;
+}
+#amr-table{
+    max-width: 2480px;
+    width:100%;
+}

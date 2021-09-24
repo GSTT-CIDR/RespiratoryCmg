@@ -14,7 +14,8 @@ LOGFILE = snakemake.log[0]
 def main():
     read_files = []
     start_time= utc.localize(datetime.datetime.now())
-
+    cutoff_time = start_time + datetime.timedelta(minutes=60)
+    max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
     sleep_interval = 10 # minutes
     fastq_list = []
@@ -24,7 +25,7 @@ def main():
     while KEEP_GOING:
         current_time = utc.localize(datetime.datetime.now())
         time.sleep(sleep_interval * 60)
-        file_list = glob.glob("{}/*".format(file_path))
+        file_list = glob.glob("{}/*".format(FQ_DIR))
         to_read = [i for i in file_list if i not in read_files]
         print("Processing files {}".format(to_read))
         for file in to_read:
@@ -34,7 +35,7 @@ def main():
                 fastq_list.append([read_time, record.format("fastq")])
                 if read_time < start_time:
                     start_time = read_time
-                    cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD)
+                    cutoff_time = start_time + datetime.timedelta(minutes=THRESHOLD)
                 if read_time > max_time:
                     max_time = read_time
         read_files.extend(to_read)
@@ -46,7 +47,7 @@ def main():
             print("Time exceeded: Writing files")
             KEEP_GOING = False
         else:
-            print("Threshold of {} hours not met, still running".format(THRESHOLD))
+            print("Threshold of {} minutes not met, still running".format(THRESHOLD))
 
     with open(OUTFILE, "w") as of:
         for r_time, fq in fastq_list:
@@ -56,3 +57,8 @@ def main():
     with open(LOGFILE, "w") as log:
         for f in read_files:
             log.write("{}\n".format(f))
+
+if __name__ == "__main__":
+    main()
+
+    

@@ -1,8 +1,8 @@
 rule nanostat:
     input:
-        "files/{sample}.fastq"
+        "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
     output:
-        "results/{sample}/qc/nanostat_summary.txt",
+        "results/{sample}/{time}_minutes/qc/nanostat_summary.txt",
  
     shell:
         "NanoStat --fastq {input} -n {output}"
