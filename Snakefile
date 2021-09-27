@@ -22,9 +22,9 @@ TIME = [120]
 
 print(SAMPLES, TIME)
 
-include: "rules/move_files.smk"
-include: "rules/host_remove.smk"
-include: "rules/centrifuge.smk"
+# include: "rules/move_files.smk"
+# include: "rules/host_remove.smk"
+# include: "rules/centrifuge.smk"
 include: "rules/amr.smk"
 include: "rules/qc.smk"
 include: "rules/report.smk"

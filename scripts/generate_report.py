@@ -20,7 +20,7 @@ CFG_PATH = snakemake.input.centrifuge
 AMR_SUMMARY = snakemake.input.amr_summary
 AMR_REPORT = snakemake.input.amr_report
 QC_PATH = snakemake.input.qc
-OUTPUT = snakemake.output
+OUTPUT = str(snakemake.output)
 REPORT_HTML = snakemake.config["pdf"]["html"]
 REPORT_CSS = snakemake.config["pdf"]["css"]
 BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
@@ -58,10 +58,15 @@ def summary_qc(path):
 def cfg_to_html(path, threshold = 1):
     cfg_dict = dict()
     df = pd.read_csv(path, sep="\t")
+    df = df.round(2)
     cfg_dict["cfg_full"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
+    ic = df[df["Organism"] == "Jonesia denitrificans"]
+    if ic.empty:
+        cfg_dict["ic"] = "NA/NA"
+    else:
+        cfg_dict["ic"] = "{}/{}%".format(int(ic["Counts"]), float(ic["Percentage"]))
     above_df = df.copy()
     above_df = above_df.rename(columns={"Tax_ID" : "TaxID"})
-    above_df = above_df.round(2)
     above_df = above_df[above_df["Percentage"] > threshold]
     cfg_dict["cfg_top"] = above_df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     return cfg_dict
@@ -76,10 +81,11 @@ def amr_summary(path):
 def amr_report(path):
     with open(path, "r") as f:
         dat = f.readline().strip()
-        if dat.startswith("No results"):
+        if dat.startswith("#FILE"):
+            df = pd.read_csv(path, sep="\t", usecols=["SEQUENCE", "START", "END", "GENE", "%COVERAGE"])
+            return df.to_html(classes="table table-striped", border=0, justify="left", index=False)
+        else:
             return dat
-    df = pd.read_csv(path, sep="\t", usecols=["SEQUENCE", "START", "END", "GENE", "%COVERAGE"])
-    return df.to_html(classes="table table-striped", border=0, justify="left", index=False)
 
 
 report_dict = {"name": SAMPLE,

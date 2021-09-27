@@ -11,7 +11,7 @@
                 <thread>
                     <tr>
                         <th>Patient ID</th>
-                        <td>123456</td>
+                        <td>{{report.name}}</td>
                         <th>Time Interval</th>
                         <td>{{report.time}}</td>
                     </tr>
@@ -36,6 +36,8 @@
                     <td>{{report.num_reads}}</td>
                     <th scope="row">Mean read length</th>
                     <td>{{report.mean_read_len}}</td>
+                    <th scope="row">Internal control (J. denitrificans)</th>
+                    <td>{{report.ic}}</td>
                 </tr>
                 <tr>
                     <th scope="row">Total bases</th>
