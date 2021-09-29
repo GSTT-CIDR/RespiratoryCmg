@@ -1,5 +1,6 @@
 rule run_centrifuge:
     input:
+        #"results/{sample}/{time}_minutes/microbial/{sample}_{time}_hg_removed.fastq"
         "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
     output:
         raw = "results/{sample}/{time}_minutes/centrifuge/centrifuge_raw.tsv",

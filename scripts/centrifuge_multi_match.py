@@ -18,6 +18,7 @@ MULTI_OUTPUT = snakemake.output.multi
 FAILED_OUTPUT = snakemake.output.failed
 READ_OUTPUT = snakemake.output.read
 REPORT_OUTPUT = snakemake.output.report
+DICT_FILE = snakemake.config["taxonomy"]["dictFile"]
 
 
 def remove_low_qual_reads(df, threshold = 300):
@@ -130,27 +131,45 @@ def create_fasta_dict(fasta):
     return fasta_dict
 
 
-def create_tax_dict(taxmeta, filenames):
+# def create_tax_dict(taxmeta, filenames):
+#     tax_dict = dict()
+#     meta_df = pd.read_csv(taxmeta, sep="\t")
+#     file_df = pd.read_csv(filenames, sep="\t")
+#     for key, value in zip(meta_df["taxid"], meta_df["species_taxid"]):
+#         try:
+#             fileName = file_df.loc[file_df["species_taxid"].isin([value]), "file_name"].values[0]
+#         except IndexError:
+#             fileName = "NA"
+#         tax_dict[key] = {"species_tax": value,
+#                         "fileName": fileName}
+#     for key, value in zip(file_df["species_taxid"], file_df["file_name"]):
+#         tax_dict[key] = {"species_tax": key,
+#                         "fileName": value}
+#     return tax_dict
+#
+#
+# def make_aligner(tax_dict, genome_dir, tax_id):
+#     if tax_id not in tax_dict.keys():
+#         return None
+#     path = os.path.join(genome_dir, tax_dict[tax_id]["fileName"])
+#     if os.path.isfile(path):
+#         aligner = mp.Aligner(path, preset="map_ont", best_n=1)
+#         return aligner
+#     else:
+#         return None
+
+def create_tax_dict(dict_file):
     tax_dict = dict()
-    meta_df = pd.read_csv(taxmeta, sep="\t")
-    file_df = pd.read_csv(filenames, sep="\t")
-    for key, value in zip(meta_df["taxid"], meta_df["species_taxid"]):
-        try:
-            fileName = file_df.loc[file_df["species_taxid"].isin([value]), "file_name"].values[0]
-        except IndexError:
-            fileName = "NA"
-        tax_dict[key] = {"species_tax": value,
-                        "fileName": fileName}
-    for key, value in zip(file_df["species_taxid"], file_df["file_name"]):
-        tax_dict[key] = {"species_tax": key,
-                        "fileName": value}
+    df = pd.read_csv(dict_file, sep="\t")
+    for index, row in df.iterrows():
+        tax_dict[row["species_taxid"]] = row["filename"]
     return tax_dict
 
 
 def make_aligner(tax_dict, genome_dir, tax_id):
     if tax_id not in tax_dict.keys():
         return None
-    path = os.path.join(genome_dir, tax_dict[tax_id]["fileName"])
+    path = os.path.join(genome_dir, tax_dict[tax_id])
     if os.path.isfile(path):
         aligner = mp.Aligner(path, preset="map_ont", best_n=1)
         return aligner
@@ -216,7 +235,8 @@ def main():
     print("loading data")
     tax = taxonomy.Taxonomy.from_ncbi(NODES, NAMES)
     df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
-    taxDict = create_tax_dict(TAXMETA, FILENAMES)
+    #taxDict = create_tax_dict(TAXMETA, FILENAMES)
+    taxDict = create_tax_dict(DICT_FILE)
     fasta_dict = create_fasta_dict(FASTA)
 
     print("data loaded.... starting counts")
@@ -243,33 +263,32 @@ def main():
             failed[k] = v
 
     print("writing files")
-    
+
     # Mutli match read assignments
     with open(MULTI_OUTPUT, "w") as f:
         json.dump(multi_res, f)
-    
+
     # Failed reads
     with open(FAILED_OUTPUT, "w") as f:
         json.dump(failed, f)
-    
+
     # Read assignments
     read_df = pd.DataFrame.from_dict(report_dict, orient="index").reset_index()
     read_df.columns = ["readID", "TaxID"]
     read_df["TaxID"] = read_df["TaxID"].apply(lambda x: x.id if (x is not None) else "NA")
     read_df["Organism"] = read_df["TaxID"].apply(lambda x: get_name(x,tax)) ## swap around
     read_df.to_csv(READ_OUTPUT, index=False, sep="\t")
-    
-    
-    
-    
-    report_values = Counter([int(i.id) for i in report_dict.values()])
+
+
+
+    report_values = Counter([int(i.id) if i is not None else "No ID" for i in report_dict.values()])
     del report_values[9606]
     total_counts = sum(report_values.values())
 
     #Report output
     report_df = pd.DataFrame.from_dict(report_values, orient="index").reset_index()
     report_df.columns = ["Tax_ID", "Counts"]
-    report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name)
+    report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name if (tax.node(str(x)) is not None) else "ARGOS ISOLATE")
     report_df["Percentage"] = report_df["Counts"] / total_counts * 100
     report_df = report_df.sort_values(by="Percentage", ascending=False)
     report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]

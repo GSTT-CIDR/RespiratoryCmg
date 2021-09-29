@@ -1,15 +1,6 @@
-rule fastq2fasta:
-    input:
-        "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
-    output:
-        temp("results/{sample}/{time}_minutes/{sample}.fasta")
-    shell:
-        "seqtk seq -a {input} > {output}"
-
-
 rule abricate:
     input:
-        "results/{sample}/{time}_minutes/{sample}.fasta"
+             "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
     output:
         amr = "results/{sample}/{time}_minutes/amr/amr_results.tsv"
     shell:

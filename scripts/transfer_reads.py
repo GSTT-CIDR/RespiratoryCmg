@@ -17,7 +17,7 @@ def main():
     cutoff_time = start_time + datetime.timedelta(minutes=60)
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
-    sleep_interval = 10 # minutes
+    sleep_interval = 1 # minutes
     fastq_list = []
 
     print("Wait interval set to {} minutes".format(sleep_interval))
@@ -48,11 +48,14 @@ def main():
             KEEP_GOING = False
         else:
             print("Threshold of {} minutes not met, still running".format(THRESHOLD))
-
+    print("Reading {} reads".format(len(fastq_list)))
+    passed = 0
     with open(OUTFILE, "w") as of:
         for r_time, fq in fastq_list:
             if r_time < cutoff_time:
+                passed += 1
                 of.write(fq)
+    print("{} reads below threshold".format(passed))
 
     with open(LOGFILE, "w") as log:
         for f in read_files:
@@ -61,4 +64,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-    
+

@@ -10,7 +10,8 @@ rule micro_fastq:
     input:
         "results/{sample}/{time}_minutes/host/host_mapped.sam"
     output:
-        "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
+        #"results/{sample}/{time}_minutes/microbial/{sample}_{time}_hg_removed.fastq"
+        "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"    
     shell:
         "samtools fastq -f 4 {input} > {output}"
 
