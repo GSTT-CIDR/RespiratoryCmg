@@ -5,28 +5,29 @@ import re
 from weasyprint import HTML, CSS
 from datetime import datetime
 
-RESULTS_DIR = "../../validation/results/160921_validation_run4_sample15/120_minutes/"
-SAMPLE = "John Hancock"
-INTERVAL = 2
-CFG_PATH = RESULTS_DIR + "centrifuge/centrifuge_report.tsv"
-AMR_SUMMARY = RESULTS_DIR + "amr/scagaire_gene_summary.tsv"
-AMR_REPORT = RESULTS_DIR + "amr/scagaire_report.tsv"
-QC_PATH = RESULTS_DIR + "qc/nanostat_summary.txt"
-OUTPUT = "../Tester.pdf"
-REPORT_HTML = "ref/Template/report_template.html"
-REPORT_CSS = "ref/Template/report.css"
-BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
+#RESULTS_DIR = "../../validation/results/160921_validation_run4_sample15/120_minutes/"
+#SAMPLE = "John Hancock"
+#INTERVAL = 2
+#CFG_PATH = RESULTS_DIR + "centrifuge/centrifuge_report.tsv"
+#AMR_SUMMARY = RESULTS_DIR + "amr/scagaire_gene_summary.tsv"
+#AMR_REPORT = RESULTS_DIR + "amr/scagaire_report.tsv"
+#QC_PATH = RESULTS_DIR + "qc/nanostat_summary.txt"
+#OUTPUT = "../Tester.pdf"
+#REPORT_HTML = "ref/Template/report_template.html"
+#REPORT_CSS = "ref/Template/report.css"
+#BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
 
-# SAMPLE = snakemake.wildcards.sample
-# INTERVAL = 2
-# CFG_PATH = snakemake.input.centrifuge
-# AMR_SUMMARY = snakemake.input.amr_summary
-# AMR_REPORT = snakemake.input.amr_report
-# QC_PATH = snakemake.input.qc
-# OUTPUT = str(snakemake.output)
-# REPORT_HTML = snakemake.config["pdf"]["html"]
-# REPORT_CSS = snakemake.config["pdf"]["css"]
-# BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
+SAMPLE = snakemake.wildcards.sample
+INTERVAL = int(snakemake.wildcards.time) / 60
+CFG_PATH = snakemake.input.centrifuge
+AMR_SUMMARY = snakemake.input.amr_summary
+AMR_REPORT = snakemake.input.amr_report
+QC_PATH = snakemake.input.qc
+OUTPUT = str(snakemake.output)
+REPORT_HTML = snakemake.config["pdf"]["html"]
+REPORT_CSS = snakemake.config["pdf"]["css"]
+BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
+SAMPLE_TABLE = snakemake.config["samples"]
 
 
 def convert_bp(size):
@@ -56,6 +57,16 @@ def summary_qc(path):
             dat = re.split(r"\s{2,}", line)[1]
             qc_dict["total_bp"] = convert_bp(dat)
     return qc_dict
+
+def patient_info(path, id):
+    df = pd.read_csv(path, sep = "\t")
+    df = df[df["Sample"] == str(id)]
+    sample_dict = {"Sample" : df["Sample"].values[0],
+                   "Directory": df["Directory"].values[0],
+                   "Sample_type": df["Sample_Type"].values[0],
+                   "Hospital_ID": df["Hospital_ID"].values[0]}
+    return sample_dict
+
 
 
 def cfg_to_html(path, threshold = 1):
@@ -90,11 +101,11 @@ def amr_report(path):
         else:
             return dat
 
-print(os.getcwd())
 report_dict = {"name": SAMPLE,
                "time": str(INTERVAL) + " hrs",
                "title": "Clinical metagenomics report",
                "date": datetime.now()}
+report_dict.update(patient_info(SAMPLE_TABLE, SAMPLE))
 report_dict.update(cfg_to_html(CFG_PATH))
 report_dict.update(summary_qc(QC_PATH))
 report_dict["amr_summary"] = amr_summary(AMR_SUMMARY)

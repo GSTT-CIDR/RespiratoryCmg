@@ -1,4 +1,4 @@
-samples: "ref/sample_table.tsv"
+samples: "sample_table.tsv"
 parameters:
   hg38:
     index: "ref/hg38/hg38.mmi"
