@@ -2,7 +2,7 @@
     size: A4;
     @top-left {
       background: #476efb;
-      content: 'Clinical Metagenomics Report';
+      content: 'CIDR Metagenomics Report (Insert logo somewhere)';
       font-size: large;
       font-weight: bolder;
       height: 2cm;
@@ -17,10 +17,17 @@
       opacity: .5;
       width: 100%; }
     @top-right {
-      content: string(date);
+      content: counter(page);
       font-size: 10pt;
       height: 1cm;
       vertical-align: middle;
+      width: 100%; }
+    @bottom-left{
+      content: "Not a validated test. For research purposes only";
+      font-size: 10pt;
+      height: 1cm;
+      vertical-align: middle;
+      opacity: .75;
       width: 100%; } }
 
 html body div#date {
@@ -40,4 +47,9 @@ html body h5 {
 #amr-table{
     max-width: 2480px;
     width:100%;
+}
+#NC{
+    outline: 1px solid #000000;
+    height: 0.4cm;
+    width: 0.4cm;
 }

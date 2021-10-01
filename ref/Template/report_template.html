@@ -8,21 +8,25 @@
         <h4 id="report-title">Patient</h4>
         <section id = "Tester section">
             <table class="table table-hover">
-                <thread>
+                <tbody>
                     <tr>
-                        <th>Patient ID</th>
+                        <th>Sample ID</th>
                         <td>{{report.name}}</td>
                         <th>Time Interval</th>
                         <td>{{report.time}}</td>
                     </tr>
-                </thread>
-                <tbody>
-                <tr>
-                    <th>Time</th>
-                    <td>{{report.date.strftime("%m/%d/%Y, %H:%M:%S")}}</td>
-                    <th></th>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <th>Time</th>
+                        <td>{{report.date.strftime("%m/%d/%Y, %H:%M:%S")}}</td>
+                        <th>Hospital No.</th>
+                        <td>12345</td>
+                    </tr>
+                    <tr>
+                        <th>Run ID</th>
+                        <td>to do: Get directory name</td>
+                        <th>Sample Type</th>
+                        <td>eg. BAL</td>
+                    </tr>
                 </tbody>
             </table>
         </section>
@@ -32,7 +36,7 @@
         <section id="QC-metrics">
             <table class="table table-hover">
                 <tr>
-                    <th scope="row">Number of reads</th>
+                    <th scope="row">Total microbial reads</th>
                     <td>{{report.num_reads}}</td>
                     <th scope="row">Mean read length</th>
                     <td>{{report.mean_read_len}}</td>
@@ -44,13 +48,15 @@
                     <td>{{report.total_bp}}</td>
                     <th scope="row">Mean read quality</th>
                     <td>{{report.mean_read_qual}}</td>
+                    <th scope="row">Negative Control</th>
+                    <td class="checkbox"><input type="checkbox" name="Pass", id="NC" \> Pass <input type="checkbox" name="Fail", id="NC" \> Fail </td>
                 </tr>
 
             </table>
         </section>
     </article>
     <article id="Centrifuge-top">
-        <h4>Centrifuge Top Hits</h4>
+        <h4>Centrifuge Hits - Above Threshold</h4>
         <section id="Centrifuge-table">
             {{report.cfg_top}}
         </section>
