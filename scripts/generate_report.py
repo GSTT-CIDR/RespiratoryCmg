@@ -5,28 +5,28 @@ import re
 from weasyprint import HTML, CSS
 from datetime import datetime
 
-RESULTS_DIR = "../../validation/results/160921_validation_run4_sample15/120_minutes/"
-SAMPLE = "John Hancock"
-INTERVAL = 2
-CFG_PATH = RESULTS_DIR + "centrifuge/centrifuge_report.tsv"
-AMR_SUMMARY = RESULTS_DIR + "amr/scagaire_gene_summary.tsv"
-AMR_REPORT = RESULTS_DIR + "amr/scagaire_report.tsv"
-QC_PATH = RESULTS_DIR + "qc/nanostat_summary.txt"
-OUTPUT = "../Tester.pdf"
-REPORT_HTML = "ref/Template/report_template.html"
-REPORT_CSS = "ref/Template/report.css"
-BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
+#RESULTS_DIR = "../../validation/results/160921_validation_run4_sample15/120_minutes/"
+#SAMPLE = "John Hancock"
+#INTERVAL = 2
+#CFG_PATH = RESULTS_DIR + "centrifuge/centrifuge_report.tsv"
+#AMR_SUMMARY = RESULTS_DIR + "amr/scagaire_gene_summary.tsv"
+#AMR_REPORT = RESULTS_DIR + "amr/scagaire_report.tsv"
+#QC_PATH = RESULTS_DIR + "qc/nanostat_summary.txt"
+#OUTPUT = "../Tester.pdf"
+#REPORT_HTML = "ref/Template/report_template.html"
+#REPORT_CSS = "ref/Template/report.css"
+#BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
 
-# SAMPLE = snakemake.wildcards.sample
-# INTERVAL = 2
-# CFG_PATH = snakemake.input.centrifuge
-# AMR_SUMMARY = snakemake.input.amr_summary
-# AMR_REPORT = snakemake.input.amr_report
-# QC_PATH = snakemake.input.qc
-# OUTPUT = str(snakemake.output)
-# REPORT_HTML = snakemake.config["pdf"]["html"]
-# REPORT_CSS = snakemake.config["pdf"]["css"]
-# BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
+SAMPLE = snakemake.wildcards.sample
+INTERVAL = 2
+CFG_PATH = snakemake.input.centrifuge
+AMR_SUMMARY = snakemake.input.amr_summary
+AMR_REPORT = snakemake.input.amr_report
+QC_PATH = snakemake.input.qc
+OUTPUT = str(snakemake.output)
+REPORT_HTML = snakemake.config["pdf"]["html"]
+REPORT_CSS = snakemake.config["pdf"]["css"]
+BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
 
 
 def convert_bp(size):
