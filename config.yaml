@@ -1,7 +1,7 @@
 samples: "sample_table.tsv"
 parameters:
   hg38:
-    index: "ref/hg38/hg38.mmi"
+    index: "ref/hg38/hg38_new.mmi"
   centrifuge:
     index: "ref/Cmg_index/argos_cmg"
 taxonomy:
