@@ -4,11 +4,11 @@ import time
 
 configfile: "config.yaml"
 
-def find_path(dir, barcode):
+def find_path(exp, sample,git  barcode):
     if int(barcode) < 10:
         barcode = "0" + str(barcode)
     # Work on new method for this bit    
-    path = glob.glob("/data/{}/**/fastq_pass/barcode*{}/".format(dir,barcode), recursive=True)
+    path = glob.glob("/data/{}/{}/**/fastq_pass/barcode*{}/".format(exp, sample, barcode), recursive=True)
     #path = glob.glob("{}/{}".format(dir,barcode))
     return str(path[0])
 

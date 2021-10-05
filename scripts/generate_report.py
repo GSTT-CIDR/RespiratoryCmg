@@ -18,7 +18,7 @@ from datetime import datetime
 #BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
 
 SAMPLE = snakemake.wildcards.sample
-INTERVAL = 2
+INTERVAL = snakemake.wildcards.time
 CFG_PATH = snakemake.input.centrifuge
 AMR_SUMMARY = snakemake.input.amr_summary
 AMR_REPORT = snakemake.input.amr_report
@@ -27,6 +27,7 @@ OUTPUT = str(snakemake.output)
 REPORT_HTML = snakemake.config["pdf"]["html"]
 REPORT_CSS = snakemake.config["pdf"]["css"]
 BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
+SAMPLE_TABLE = snakemake.config["samples"]
 
 
 def convert_bp(size):
@@ -56,6 +57,16 @@ def summary_qc(path):
             dat = re.split(r"\s{2,}", line)[1]
             qc_dict["total_bp"] = convert_bp(dat)
     return qc_dict
+
+def patient_info(path, id):
+    df = pd.read_csv(path, sep = "\t")
+    df = df[df["Sample"] == str(id)]
+    sample_dict = {"Sample" : df["Sample"].values[0],
+                   "Directory": df["Directory"].values[0],
+                   "Sample_type": df["Sample_Type"].values[0],
+                   "Hospital_ID": df["Hospital_ID"].values[0]}
+    return sample_dict
+
 
 
 def cfg_to_html(path, threshold = 1):
@@ -90,11 +101,11 @@ def amr_report(path):
         else:
             return dat
 
-print(os.getcwd())
 report_dict = {"name": SAMPLE,
-               "time": str(INTERVAL) + " hrs",
+               "time": str(INTERVAL/60) + " hrs",
                "title": "Clinical metagenomics report",
                "date": datetime.now()}
+report_dict.update(sample_dict(SAMPLE_TABLE, SAMPLE))
 report_dict.update(cfg_to_html(CFG_PATH))
 report_dict.update(summary_qc(QC_PATH))
 report_dict["amr_summary"] = amr_summary(AMR_SUMMARY)

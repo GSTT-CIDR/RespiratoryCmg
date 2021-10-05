@@ -19,13 +19,13 @@
                         <th>Time</th>
                         <td>{{report.date.strftime("%m/%d/%Y, %H:%M:%S")}}</td>
                         <th>Hospital No.</th>
-                        <td>12345</td>
+                        <td>{{report.Hospital_ID}}</td>
                     </tr>
                     <tr>
                         <th>Run ID</th>
-                        <td>to do: Get directory name</td>
+                        <td>{{report.Directory}}</td>
                         <th>Sample Type</th>
-                        <td>eg. BAL</td>
+                        <td>{{report.Sample_type}}</td>
                     </tr>
                 </tbody>
             </table>
