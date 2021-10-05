@@ -18,7 +18,11 @@ from datetime import datetime
 #BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
 
 SAMPLE = snakemake.wildcards.sample
+<<<<<<< HEAD
 INTERVAL = snakemake.wildcards.time
+=======
+INTERVAL = int(snakemake.wildcards.time) / 60
+>>>>>>> c2da8a42ec8d443b505dde052739a24286868a40
 CFG_PATH = snakemake.input.centrifuge
 AMR_SUMMARY = snakemake.input.amr_summary
 AMR_REPORT = snakemake.input.amr_report
@@ -105,7 +109,11 @@ report_dict = {"name": SAMPLE,
                "time": str(INTERVAL/60) + " hrs",
                "title": "Clinical metagenomics report",
                "date": datetime.now()}
+<<<<<<< HEAD
 report_dict.update(sample_dict(SAMPLE_TABLE, SAMPLE))
+=======
+report_dict.update(patient_info(SAMPLE_TABLE, SAMPLE))
+>>>>>>> c2da8a42ec8d443b505dde052739a24286868a40
 report_dict.update(cfg_to_html(CFG_PATH))
 report_dict.update(summary_qc(QC_PATH))
 report_dict["amr_summary"] = amr_summary(AMR_SUMMARY)

@@ -12,15 +12,15 @@ def find_path(exp, sample,git  barcode):
     #path = glob.glob("{}/{}".format(dir,barcode))
     return str(path[0])
 
-print("waiting 1 minute before running")
-time.sleep(60)
+print("waiting 2 minute before running")
+time.sleep(120)
 
 sample_table = pd.read_csv(config["samples"], sep="\t").set_index("Sample")
-#sample_table["path"] = sample_table.apply(lambda x: find_path(x.Directory, x.Barcode), axis = 1)
+sample_table["path"] = sample_table.apply(lambda x: find_path(x.Directory, x.Barcode), axis = 1)
 
 SAMPLES = sample_table.index.values
 
-TIME = [120]
+TIME = [120] # move to config file
 
 print(SAMPLES, TIME)
 
@@ -34,4 +34,4 @@ include: "rules/report.smk"
 
 rule all:
     input:
-        expand("results/{sample}/{time}_minutes/report/{sample}_report.pdf", sample = SAMPLES, time = TIME)
+        expand("reports/{sample}/{sample}_{time}_minutes_report.pdf", sample = SAMPLES, time = TIME)

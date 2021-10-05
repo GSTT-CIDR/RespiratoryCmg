@@ -1,0 +1,5 @@
+Sample	Directory	Barcode	Sample_Type	Hospital_ID
+Clinical_num_1	210929_mark_training/undepleted2/	1	Control	NA
+Clinical_num_2	210929_mark_training/C1_restart/	2	BAL	NA
+Clinical_num_3	210929_mark_training/C2_restart_/	3	ETT	NA
+Clinical_num_4	210929_mark_training/C3_restart/	4	Control	Test
