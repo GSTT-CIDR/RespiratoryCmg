@@ -1,10 +1,10 @@
 rule run_centrifuge:
     input:
-        #"results/{sample}/{time}_minutes/microbial/{sample}_{time}_hg_removed.fastq"
-        "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
+        "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
+        # "results/{sample}/{time}_hours/microbial/hg38_unmapped.fastq"
     output:
-        raw = "results/{sample}/{time}_minutes/centrifuge/centrifuge_raw.tsv",
-        report = temp("results/{sample}/{time}_minutes/centrifuge/centrifuge_report_raw.tsv")
+        raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
+        report = temp("results/{sample}/{time}_hours/centrifuge/centrifuge_report_raw.tsv")
     shell:
         "centrifuge -p 4 --min-hitlen 25 --mm -x {config[parameters][centrifuge][index]} -q {input} -S {output.raw} \
         --report-file {output.report}"
@@ -14,15 +14,13 @@ rule run_centrifuge:
 
 rule parse_centrifuge:
     input:
-        file = "results/{sample}/{time}_minutes/centrifuge/centrifuge_raw.tsv",
-        fasta = "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
+        file = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
+        fasta = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
     output:
-        report = "results/{sample}/{time}_minutes/centrifuge/centrifuge_report.tsv",
-        read = "results/{sample}/{time}_minutes/centrifuge/read_assignments.tsv",
-        failed = "results/{sample}/{time}_minutes/centrifuge/failed_reads.json",
-        multi = "results/{sample}/{time}_minutes/centrifuge/multi_read.json"
-    # conda:
-    #     "../env/centrifuge.yml"
+        report = "results/{sample}/{time}_hours/centrifuge/centrifuge_report.tsv",
+        read = "results/{sample}/{time}_hours/centrifuge/read_assignments.tsv",
+        failed = "results/{sample}/{time}_hours/centrifuge/failed_reads.json",
+        multi = "results/{sample}/{time}_hours/centrifuge/multi_read.json"
     script:
         "../scripts/centrifuge_multi_match.py"
 

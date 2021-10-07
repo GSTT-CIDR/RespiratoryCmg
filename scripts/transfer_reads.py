@@ -17,7 +17,7 @@ def main():
     cutoff_time = start_time + datetime.timedelta(minutes=60)
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
-    sleep_interval = 1 # minutes
+    sleep_interval = 5 # minutes
     fastq_list = []
 
     print("Wait interval set to {} minutes".format(sleep_interval))
@@ -35,7 +35,7 @@ def main():
                 fastq_list.append([read_time, record.format("fastq")])
                 if read_time < start_time:
                     start_time = read_time
-                    cutoff_time = start_time + datetime.timedelta(minutes=THRESHOLD)
+                    cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD)
                 if read_time > max_time:
                     max_time = read_time
         read_files.extend(to_read)
