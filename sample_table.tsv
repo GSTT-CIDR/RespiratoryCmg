@@ -1,5 +1,5 @@
 Sample	Directory	Barcode	Sample_Type	Hospital_ID
-Clinical_num_1	210929_mark_training/C1_restart/	1	Control	123456
-Clinical_num_2	210929_mark_training/C2_restart_/	2	Control	abcdefg
-Clinical_num_3	210929_mark_training/C3_restart/	3	Control	xyz456
-Clinical_num_4	210929_mark_training/undepleted2/	4	Control	rasdasf
+pr2	211006_prepilot_d2/pr2	3	Sputum	8065809t
+pr3	211006_prepilot_d2/pr3	4	Sputum	2158415a
+pr4	211006_prepilot_d2/pr4	5	Sputum	262380g
+pr_n2	211006_prepilot_d2/pr_n2	6	NTC	na

@@ -14,10 +14,10 @@ LOGFILE = snakemake.log[0]
 def main():
     read_files = []
     start_time= utc.localize(datetime.datetime.now())
-    cutoff_time = start_time + datetime.timedelta(minutes=60)
+    cutoff_time = start_time + datetime.timedelta(minutes=THRESHOLD)
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
-    sleep_interval = 1 # minutes
+    sleep_interval = 10 # minutes
     fastq_list = []
 
     print("Wait interval set to {} minutes".format(sleep_interval))
@@ -39,7 +39,7 @@ def main():
                 if read_time > max_time:
                     max_time = read_time
         read_files.extend(to_read)
-        buffer_time = cutoff_time + datetime.timedelta(minutes=15)
+        buffer_time = cutoff_time + datetime.timedelta(minutes=30)
         if max_time > cutoff_time:
             print("Past time threshold: writing relevant reads to file")
             KEEP_GOING = False
@@ -48,6 +48,7 @@ def main():
             KEEP_GOING = False
         else:
             print("Threshold of {} minutes not met, still running".format(THRESHOLD))
+    print("Start time: {}, Cut-off time: {}, Max time:{}".format(start_time, cutoff_time, max_time))
     print("Reading {} reads".format(len(fastq_list)))
     passed = 0
     with open(OUTFILE, "w") as of:

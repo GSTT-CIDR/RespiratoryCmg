@@ -73,6 +73,7 @@ def cfg_to_html(path, threshold = 1):
     cfg_dict = dict()
     df = pd.read_csv(path, sep="\t")
     df = df.round(2)
+    df = df.drop(columns="Tax_ID")
     cfg_dict["cfg_full"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     ic = df[df["Organism"] == "Jonesia denitrificans"]
     if ic.empty:
@@ -80,7 +81,6 @@ def cfg_to_html(path, threshold = 1):
     else:
         cfg_dict["ic"] = "{}/{}%".format(int(ic["Counts"]), float(ic["Percentage"]))
     above_df = df.copy()
-    above_df = above_df.drop(columns=["Tax_ID"])
     above_df = above_df[above_df["Percentage"] > threshold]
     cfg_dict["cfg_top"] = above_df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     return cfg_dict
