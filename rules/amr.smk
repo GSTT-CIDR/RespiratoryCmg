@@ -1,28 +1,28 @@
 rule abricate:
     input:
-             "results/{sample}/{time}_minutes/microbial/hg38_unmapped.fastq"
+             "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
     output:
-        amr = "results/{sample}/{time}_minutes/amr/amr_results.tsv"
+        amr = "results/{sample}/{time}_hours/amr/amr_results.tsv"
     shell:
         "abricate --mincov 90 {input} > {output}"
 
 
 rule top_centrifuge:
     input:
-        "results/{sample}/{time}_minutes/centrifuge/centrifuge_report.tsv"
+        "results/{sample}/{time}_hours/centrifuge/centrifuge_report.tsv"
     output:
-        "results/{sample}/{time}_minutes/amr/centrifuge_top_hits.tsv"
+        "results/{sample}/{time}_hours/amr/centrifuge_top_hits.tsv"
     script:
         "../scripts/scagaire_targets.py"
 
 
 rule scagaire:
     input:
-        amr_res = "results/{sample}/{time}_minutes/amr/amr_results.tsv",
-        top_hit = "results/{sample}/{time}_minutes/amr/centrifuge_top_hits.tsv"
+        amr_res = "results/{sample}/{time}_hours/amr/amr_results.tsv",
+        top_hit = "results/{sample}/{time}_hours/amr/centrifuge_top_hits.tsv"
     output:
-        summary = "results/{sample}/{time}_minutes/amr/scagaire_gene_summary.tsv",
-        report = "results/{sample}/{time}_minutes/amr/scagaire_report.tsv"
+        summary = "results/{sample}/{time}_hours/amr/scagaire_gene_summary.tsv",
+        report = "results/{sample}/{time}_hours/amr/scagaire_report.tsv"
     shell:
         """
         t=$(cat {input.top_hit} | paste -sd "," -)

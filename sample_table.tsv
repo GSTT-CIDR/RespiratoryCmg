@@ -1,5 +1,3 @@
-Sample	Directory	Barcode	Sample_Type	Hospital_ID
-pr2	211006_prepilot_d2/pr2	3	Sputum	8065809t
-pr3	211006_prepilot_d2/pr3	4	Sputum	2158415a
-pr4	211006_prepilot_d2/pr4	5	Sputum	262380g
-pr_n2	211006_prepilot_d2/pr_n2	6	NTC	na
+Patient_ID	Experiment	Sample_ID	Barcode	Sample_Type	Hospital_ID
+pr5	211007_prepilot_d3	pr5	7	NDL	0450538s
+pr_n3	211007_prepilot_d3	pr_n3	8	control	na

@@ -12,20 +12,26 @@
                     <tr>
                         <th>Sample ID</th>
                         <td>{{report.name}}</td>
-                        <th>Time Interval</th>
-                        <td>{{report.time}}</td>
-                    </tr>
-                    <tr>
                         <th>Time</th>
                         <td>{{report.date.strftime("%m/%d/%Y, %H:%M:%S")}}</td>
-                        <th>Hospital No.</th>
-                        <td>{{report.Hospital_ID}}</td>
                     </tr>
                     <tr>
-                        <th>Run ID</th>
-                        <td>{{report.Directory}}</td>
+                        <th>Hospital No.</th>
+                        <td>{{report.Hospital_ID}}</td>
+                        <th>Experiment Folder</th>
+                        <td>{{report.Experiment}}</td>
+                    </tr>
+                    <tr>
                         <th>Sample Type</th>
-                        <td>{{report.Sample_type}}</td>
+                        <td>{{report.Sample_Type}}</td>
+                        <th>Sample_ID</th>
+                        <td>{{report.Sample_ID}}</td>
+                    </tr>
+                    <tr>
+                        <th>Time Interval</th>
+                        <td>{{report.time}}</td>
+                        <th>Barcode</th>
+                        <td>{{report.Barcode}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -37,17 +43,23 @@
             <table class="table table-hover">
                 <tr>
                     <th scope="row">Total microbial reads</th>
-                    <td>{{report.num_reads}}</td>
-                    <th scope="row">Mean read length</th>
-                    <td>{{report.mean_read_len}}</td>
-                    <th scope="row">Internal control (J. denitrificans)</th>
-                    <td>{{report.ic}}</td>
+                    <td>{{report.micro_reads}}</td>
+                    <th scope="row">Total reads</th>
+                    <td>{{report.total_reads}}</td>
+                    <th scope="row">Total human reads</th>
+                    <td>{{report.human_reads}}</td>
                 </tr>
                 <tr>
                     <th scope="row">Total bases</th>
                     <td>{{report.total_bp}}</td>
+                    <th scope="row">Mean read length</th>
+                    <td>{{report.mean_read_len}}</td>
                     <th scope="row">Mean read quality</th>
                     <td>{{report.mean_read_qual}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Internal control (J. denitrificans)</th>
+                    <td>{{report.ic}}</td>
                     <th scope="row">Negative Control</th>
                     <td class="checkbox"><input type="checkbox" name="Pass", id="NC" \> Pass <input type="checkbox" name="Fail", id="NC" \> Fail </td>
                 </tr>

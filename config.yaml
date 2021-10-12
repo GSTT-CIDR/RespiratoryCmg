@@ -1,4 +1,6 @@
 samples: "sample_table.tsv"
+time: [2]
+abundance_threshold: 1
 parameters:
   hg38:
     index: "ref/hg38/hg38_new.mmi"
