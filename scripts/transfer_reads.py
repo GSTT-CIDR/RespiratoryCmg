@@ -40,14 +40,14 @@ def main():
                     max_time = read_time
         read_files.extend(to_read)
         buffer_time = cutoff_time + datetime.timedelta(minutes=15)
-        if max_time > cutoff_time:
+        if max_time > buffer_time:
             print("Past time threshold: writing relevant reads to file")
             KEEP_GOING = False
         elif current_time > buffer_time:
             print("Time exceeded: Writing files")
             KEEP_GOING = False
         else:
-            print("Cut-off time set to {} with Threshold of {} hours, still running".format(cutoff_time, THRESHOLD))
+            print("Cut-off time set to {} (including 15 minute buffer) with Threshold of {} hours, still running".format(buffer_time, THRESHOLD))
     print("Reading {} reads".format(len(fastq_list)))
     passed = 0
     with open(OUTFILE, "w") as of:

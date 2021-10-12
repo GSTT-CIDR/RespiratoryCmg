@@ -69,8 +69,8 @@ def samtools_stats(path):
         data = f.read().splitlines()
     total_reads = data[0].split()[0]
     human_reads = data[4].split()[0]
-    stats = {"total_reads" : convert_bp(total_reads),
-             "human_reads": convert_bp(human_reads)}
+    stats = {"total_reads" : total_reads,
+             "human_reads": human_reads}
     return stats
 
 
@@ -93,7 +93,7 @@ def cfg_to_html(path, threshold = THRESHOLD):
     df = df.round(2)
     df = df.drop(columns=["Tax_ID"])
     cfg_dict["cfg_full"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
-    cfg_dict["micro_reads"] = convert_bp(sum(df["Counts"]))
+    cfg_dict["micro_reads"] = sum(df["Counts"])
     ic = df[df["Organism"] == "Jonesia denitrificans"]
     if ic.empty:
         cfg_dict["ic"] = "NA/NA"

@@ -14,8 +14,8 @@ def find_path(exp, sample, barcode):
     else:
         return path[0]   
 	
-print("waiting 2 minute before running")
-time.sleep(120)
+print("Waiting 1 minute before running")
+time.sleep(60)
 
 sample_table = pd.read_csv(config["samples"], sep="\t").set_index("Patient_ID")
 sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.Sample_ID, x.Barcode), axis = 1)
