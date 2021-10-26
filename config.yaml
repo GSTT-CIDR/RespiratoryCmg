@@ -5,7 +5,7 @@ parameters:
   hg38:
     index: "ref/hg38/hg38_new.mmi"
   centrifuge:
-    index: "ref/Cmg_index/argos_cmg"
+    index: "ref/Cmg_index/pilot_cmg"
 taxonomy:
   dictFile: "ref/refseq/Assembly_summary/argos_taxdict.tsv"
   names: "ref/refseq/taxonomy/names.dmp"

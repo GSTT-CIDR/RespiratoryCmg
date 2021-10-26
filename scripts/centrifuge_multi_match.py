@@ -235,7 +235,7 @@ def main():
     print("loading data")
     tax = taxonomy.Taxonomy.from_ncbi(NODES, NAMES)
     df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
-    #taxDict = create_tax_dict(TAXMETA, FILENAMES)
+    # taxDict = create_tax_dict(TAXMETA, FILENAMES)
     taxDict = create_tax_dict(DICT_FILE)
     fasta_dict = create_fasta_dict(FASTA)
 

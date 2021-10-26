@@ -4,7 +4,7 @@ rule abricate:
     output:
         amr = "results/{sample}/{time}_hours/amr/amr_results.tsv"
     shell:
-        "abricate --mincov 90 {input} > {output}"
+        "abricate --mincov 90 --db resfinder {input} > {output}"
 
 
 rule top_centrifuge:

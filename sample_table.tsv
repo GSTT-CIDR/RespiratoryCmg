@@ -1,3 +1,5 @@
 Patient_ID	Experiment	Sample_ID	Barcode	Sample_Type	Hospital_ID
-pr5	211007_prepilot_d3	pr5	7	NDL	0450538s
-pr_n3	211007_prepilot_d3	pr_n3	8	control	na
+Clinical_num_1	This/is/a/fake/path/	Clinical_num_1	1	PC	123456
+Clinical_num_2	This/is/a/fake/path/	Clinical_num_2	2	PC	123457
+Clinical_num_3	This/is/a/fake/path/	Clinical_num_3	3	PC	123458
+Clinical_num_4	This/is/a/fake/path/	Clinical_num_4	4	PC	123459
