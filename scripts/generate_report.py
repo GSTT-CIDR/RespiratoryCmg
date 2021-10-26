@@ -18,7 +18,7 @@ from datetime import datetime
 #BOOTSTRAP_CSS = "ref/Template/bootstrap.css"
 
 SAMPLE = snakemake.wildcards.sample
-INTERVAL = int(snakemake.wildcards.time)
+INTERVAL = float(snakemake.wildcards.time)
 CFG_PATH = snakemake.input.centrifuge
 AMR_SUMMARY = snakemake.input.amr_summary
 AMR_REPORT = snakemake.input.amr_report

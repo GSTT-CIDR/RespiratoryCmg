@@ -7,8 +7,8 @@ configfile: "config.yaml"
 
 
 def find_path(exp, sample, barcode):
-    barcode_dict = {1: "01", 2:"02", 3:"03", 4:"04", 5:"05", 6:"06", 7:"07", 8:"08", 9:"09", 10:"10", 11:"11", 12:"12a"}
-    path_str = "/data/{}/{}/**/fastq_pass/barcode*{}/".format(exp, sample, barcode_dict[barcode])
+    barcode_dict = {"1": "01", "2":"02", "3":"03", "4":"04", "5":"05", "6":"06", "7":"07", "8":"08", "9":"09", "10":"10", "11":"11", "12":"12a"}
+    path_str = "/data/{}/{}/**/fastq_pass/barcode{}/".format(exp, sample, barcode_dict[str(barcode)])
     path = glob.glob(path_str, recursive=True)
     if len(path) == 0:
         sys.exit("Error: path error with sample {}. Check variables for experiment, sample or barcode".format(sample))

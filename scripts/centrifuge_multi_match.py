@@ -10,6 +10,7 @@ import json
 NODES = snakemake.config["taxonomy"]["nodes"]
 NAMES = snakemake.config["taxonomy"]["names"]
 CENTRIFUGE_FILE = snakemake.input.file
+CFG_THRESHOLD = snakemake.config["cfg_score"]
 TAXMETA = snakemake.config["taxonomy"]["speciesTaxMeta"]
 FILENAMES = snakemake.config["taxonomy"]["speciesFileNames"]
 FASTA = snakemake.input.fasta
@@ -41,6 +42,7 @@ def remove_low_qual_reads(df, threshold = 300):
         {readID: {alignment: False, reason: score below threshold}}
 
     """
+    print("Centrifuge threshold set  to: {}".format(threshold))
     above_threshold = df[df["score"] > threshold]
     rejected_reads = df[df["score"] < threshold]["readID"].unique()
     failed = {k:{"alignment": False, "reason": "score below threshold"} for k in rejected_reads}
@@ -241,7 +243,7 @@ def main():
 
     print("data loaded.... starting counts")
 
-    above_threshold, failed = remove_low_qual_reads(df, 300)
+    above_threshold, failed = remove_low_qual_reads(df, CFG_THRESHOLD)
     report_dict, multi_hit_dict = split_hits(above_threshold, tax)
 
     print("Starting multi-match resolution")
