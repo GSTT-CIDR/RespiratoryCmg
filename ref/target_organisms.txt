@@ -1,0 +1,85 @@
+Actinomyces naeslundii
+Actinomyces oris
+Acinetobacter baumannii
+Bacteroides fragilis
+Burkholderia gladioli
+Burkholderia glumae
+Burkholderia plantarii
+Burkholderia cepacia
+Citrobacter freundii
+Citrobacter koseri
+Klebsiella aerogenes
+Enterobacter cloacae
+Enterococcus faecium
+Elizabethkingia anophelis
+Escherichia coli
+Francisella tularensis
+Fusobacterium necrophorum
+Fusobacterium nucleatum
+Haemophilus influenzae
+Klebsiella oxytoca
+Klebsiella pneumoniae
+Klebsiella michiganensis
+Legionella pneumophila
+Moraxella catarrhalis
+Morganella morganii
+Neisseria cinerea
+Neisseria gonorrhoeae
+Neisseria meningitidis
+Neisseria mucosa
+Nocardia asteroides
+Nocardia brasiliensis
+Pasteurella multocida
+Proteus mirabilis
+Propionibacterium acidifaciens
+Pseudomonas aeruginosa
+Rothia mucilaginosa
+Serratia marcescens
+Stenotrophomonas maltophilia
+Streptococcus pneumoniae
+Streptococcus dysgalactiae
+Streptococcus agalactiae
+Streptococcus pyogenes
+Streptococcus viridans
+Streptococcus anginosus
+Streptococcus intermedius
+Streptococcus constellatus
+Staphylococcus lugdunensis
+Staphylococcus epidermidis
+Staphylococcus aureus
+Veillonella parvula
+Corynebacterium striatum
+Aspergillus fumigatus
+Aspergillus niger
+Aspergillus flavus
+Aspergillus versicolor
+Aspergillus nidulans
+Aspergillus glaucus
+Aspergillus terreus
+Aspergillus clavatus
+Candida albicans
+Candida parapsilosis
+Clavispora lusitaniae
+Meyerozyma guilliermondii
+Kluyveromyces marxianus
+Pichia kudriavzevii
+Candida dubliniensis
+[Candida] glabrata
+Candida tropicalis
+Candida orthopsilosis
+[Candida] auris
+Rhizopus
+Rhizomucor
+Mucor
+Absidia
+Apophysomyces
+Pneumocystis jirovecii
+Bordetella pertussis
+Cutibacterium acnes
+Raoultella ornithinolytica
+Zygosaccharomyces rouxii
+Aneurinibacillus aneurinilyticus
+Aneurinibacillus migulanus
+Flavobacterium hibernum
+Mycobacterium
+

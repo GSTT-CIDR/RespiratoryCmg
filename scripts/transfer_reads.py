@@ -6,7 +6,7 @@ import pytz
 import time
 utc=pytz.UTC
 
-THRESHOLD = int(snakemake.wildcards.time)
+THRESHOLD = float(snakemake.wildcards.time)
 FQ_DIR = snakemake.input.seq_dir
 OUTFILE = snakemake.output.analysis
 LOGFILE = snakemake.log[0]
@@ -35,19 +35,19 @@ def main():
                 fastq_list.append([read_time, record.format("fastq")])
                 if read_time < start_time:
                     start_time = read_time
-                    cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD)
+                    cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD, minutes=sleep_interval) # Added the 5 minute sleep to allow read queue to write to files
                 if read_time > max_time:
                     max_time = read_time
         read_files.extend(to_read)
         buffer_time = cutoff_time + datetime.timedelta(minutes=15)
-        if max_time > buffer_time:
+        if max_time > cutoff_time:
             print("Past time threshold: writing relevant reads to file")
             KEEP_GOING = False
         elif current_time > buffer_time:
             print("Time exceeded: Writing files")
             KEEP_GOING = False
         else:
-            print("Cut-off time set to {} (including 15 minute buffer) with Threshold of {} hours, still running".format(buffer_time, THRESHOLD))
+            print("Cut-off time set to {} (including 5 minute buffer time) with Threshold of {} hours, still running".format(cutoff_time, THRESHOLD))
     print("Reading {} reads".format(len(fastq_list)))
     passed = 0
     with open(OUTFILE, "w") as of:
