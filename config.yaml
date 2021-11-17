@@ -4,11 +4,6 @@ time: [2]
 abundance_threshold: 1
 cfg_score: 8000
 targets: "ref/target_organisms.txt"
-=======
-time: [0.5,2,16]
-abundance_threshold: 0.75
-cfg_score: 8000
->>>>>>> 0f3ed45215f55be45139bdd7ee8987c129878ed4
 parameters:
   hg38:
     index: "ref/hg38/hg38_new.mmi"
