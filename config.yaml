@@ -1,5 +1,4 @@
 samples: "sample_table.tsv"
-<<<<<<< HEAD
 time: [2]
 abundance_threshold: 1
 cfg_score: 8000

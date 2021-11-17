@@ -39,7 +39,6 @@ def main():
                 if read_time > max_time:
                     max_time = read_time
         read_files.extend(to_read)
-<<<<<<< HEAD
         buffer_time = cutoff_time + datetime.timedelta(minutes=15)
         if max_time > cutoff_time:
             print("Past time threshold: writing relevant reads to file")
