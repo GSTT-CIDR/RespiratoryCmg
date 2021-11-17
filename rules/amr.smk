@@ -4,7 +4,7 @@ rule abricate:
     output:
         amr = "results/{sample}/{time}_hours/amr/amr_results.tsv"
     shell:
-        "abricate --mincov 90 {input} > {output}"
+        "abricate --mincov 90 --db card {input} > {output}"
 
 
 rule top_centrifuge:
@@ -26,7 +26,7 @@ rule scagaire:
     shell:
         """
         t=$(cat {input.top_hit} | paste -sd "," -)
-        scagaire "$t" {input.amr_res} -s {output.summary} -o {output.report}
+        scagaire "$t" {input.amr_res} -n card -s {output.summary} -o {output.report}
         if [ ! -f "{output.summary}" ]; then
             echo "No species in database" > {output.summary}
             echo "No Report" > {output.report}

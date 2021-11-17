@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
+FINAL_pr1	prepilot_runs/21105_prepilot_run1	pr1	1	Patient	Testing
+=======
 Patient_ID	Experiment	Sample_ID	Barcode	Sample_Type	Hospital_ID
 FINAL_pr1	prepilot_runs/211005_prepilot_run1	pr1	1	Patient	Testing
+>>>>>>> 0f3ed45215f55be45139bdd7ee8987c129878ed4
 FINAL_pr2	prepilot_runs/211006_prepilot_d2	pr2	3	Patient	Testing
 FINAL_pr3	prepilot_runs/211006_prepilot_d2	pr3	4	Patient	Testing
 FINAL_pr4	prepilot_runs/211006_prepilot_d2	pr4	5	Patient	Testing
@@ -8,6 +13,8 @@ FINAL_pr6	prepilot_runs/211012_prepilot_d4	pr6	9	Patient	Testing
 FINAL_pr7	prepilot_runs/211012_prepilot_d4	pr7	10	Patient	Testing
 FINAL_pr8	prepilot_runs/211013_prepilot_d5	pr8	1	Patient	Testing
 FINAL_pr9	prepilot_runs/211013_prepilot_d5	pr9	2	Patient	Testing
+<<<<<<< HEAD
+=======
 FINAL_pr10	211014_prepilot_d6	pr10	4	Patient	Testing
 FINAL_pr11	211014_prepilot_d6	pr11	5	Patient	Testing
 FINAL_pr12	211019_prepilot_d7	pr12	7	Patient	Testing
@@ -27,3 +34,4 @@ FINAL_pr_n6	211014_prepilot_d6	pr_n6	6	NC	Testing
 FINAL_pr_n7	211019_prepilot_d7	pr_n7	9	NC	Testing
 FINAL_pr_n8	211020_prepilot_d8	pr_n8	1	NC	Testing
 FINAL_pr_n9	211021_prepilot_d9	pr_n9	7	NC	Testing
+>>>>>>> 0f3ed45215f55be45139bdd7ee8987c129878ed4

@@ -237,7 +237,7 @@ def main():
     print("loading data")
     tax = taxonomy.Taxonomy.from_ncbi(NODES, NAMES)
     df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
-    #taxDict = create_tax_dict(TAXMETA, FILENAMES)
+    # taxDict = create_tax_dict(TAXMETA, FILENAMES)
     taxDict = create_tax_dict(DICT_FILE)
     fasta_dict = create_fasta_dict(FASTA)
 
@@ -281,8 +281,6 @@ def main():
     read_df["Organism"] = read_df["TaxID"].apply(lambda x: get_name(x,tax)) ## swap around
     read_df.to_csv(READ_OUTPUT, index=False, sep="\t")
 
-
-
     report_values = Counter([int(i.id) if i is not None else "No ID" for i in report_dict.values()])
     del report_values[9606]
     total_counts = sum(report_values.values())
@@ -294,6 +292,16 @@ def main():
     report_df["Percentage"] = report_df["Counts"] / total_counts * 100
     report_df = report_df.sort_values(by="Percentage", ascending=False)
     report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
+
+    ## Adding E.cloacae complex to species within this
+    e_cloacae_complex = {"Enterobacter asburiae": "Enterobacter asburiae (E. cloacae complex)",
+                         "Enterobacter cancerogenus": "Enterobacter cancerogenus (E. cloacae complex)",
+                         "Enterobacter hormaechei": "Enterobacter hormaechei (E. cloacae complex)",
+                         "Enterobacter ludwigii": "Enterobacter ludwigii (E. cloacae complex",
+                         "Enterobacter roggenkampii": "Enterobacter roggenkampii (E. cloacae complex)",
+                         "Enterobacter bugandensis": "Enterobacter bugandensis (E. cloacae complex)"}
+
+    report_df = report_df.replace({"Organism": e_cloacae_complex})
     report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
 
 

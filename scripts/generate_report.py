@@ -30,6 +30,8 @@ BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
 SAMPLE_TABLE = snakemake.config["samples"]
 SAMTOOLS_STAT = snakemake.input.stats
 THRESHOLD = snakemake.config["abundance_threshold"]
+TARGETS = snakemake.config["targets"]
+
 
 
 def convert_bp(size):
@@ -76,23 +78,35 @@ def samtools_stats(path):
 
 def patient_info(path, id):
     df = pd.read_csv(path, sep = "\t")
-    df = df[df["Patient_ID"] == str(id)]
-    sample_dict = {"Patient_ID" : df["Patient_ID"].values[0],
+    df = df[df["Lab_ID"] == str(id)]
+    sample_dict = {"Lab_ID" : df["Lab_ID"].values[0],
                    "Experiment": df["Experiment"].values[0],
                    "Sample_ID": df["Sample_ID"].values[0],
                    "Barcode": df["Barcode"].values[0],
                    "Sample_Type": df["Sample_Type"].values[0],
-                   "Hospital_ID": df["Hospital_ID"].values[0]}
+                   "Patient_ID": df["Patient_ID"].values[0]}
     return sample_dict
 
+def is_target(s, target_file = TARGETS):
+    with open(TARGETS, "r") as f:
+        targets = [t.strip() for t in f]
+    if s["Organism"] in targets:
+        return ["color: red"] * 3
+    else:
+        return ["color: black"] * 3
 
 # Change this from hardcoding threshold
-def cfg_to_html(path, threshold = THRESHOLD):
+def cfg_to_html(path, threshold = THRESHOLD, target_file = TARGETS):
+    exceptions = "Aspergillus|Candida"
     cfg_dict = dict()
     df = pd.read_csv(path, sep="\t")
     df = df.round(2)
     df = df.drop(columns=["Tax_ID"])
+    full = df.copy()
+    s = full.style.apply(is_target, axis=1)
+    s = s.format(precision=2)
     cfg_dict["cfg_full"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
+    # cfg_dict["cfg_full"] = s.set_table_attributes('class="table table-striped"').hide_index().render()
     cfg_dict["micro_reads"] = sum(df["Counts"])
     ic = df[df["Organism"] == "Jonesia denitrificans"]
     if ic.empty:
@@ -100,7 +114,7 @@ def cfg_to_html(path, threshold = THRESHOLD):
     else:
         cfg_dict["ic"] = "{}/{}%".format(int(ic["Counts"]), float(ic["Percentage"]))
     above_df = df.copy()
-    above_df = above_df[above_df["Percentage"] > threshold]
+    above_df = above_df[(above_df["Percentage"] > threshold) |(above_df["Organism"].str.contains(exceptions) ]
     cfg_dict["cfg_top"] = above_df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     return cfg_dict
 
@@ -159,8 +173,7 @@ def amr_report(path, summary_path):
         return "No Results"
 
 
-report_dict = {"name": SAMPLE,
-               "time": str(INTERVAL) + " hrs",
+report_dict = {"time": str(INTERVAL) + " hrs",
                "title": "Clinical metagenomics report",
                "date": datetime.now()}
 
