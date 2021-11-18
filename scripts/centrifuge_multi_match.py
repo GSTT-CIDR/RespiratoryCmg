@@ -294,14 +294,16 @@ def main():
     report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
 
     ## Adding E.cloacae complex to species within this
-    e_cloacae_complex = {"Enterobacter asburiae": "Enterobacter asburiae (E. cloacae complex)",
+    species_complex = {"Enterobacter asburiae": "Enterobacter asburiae (E. cloacae complex)",
                          "Enterobacter cancerogenus": "Enterobacter cancerogenus (E. cloacae complex)",
                          "Enterobacter hormaechei": "Enterobacter hormaechei (E. cloacae complex)",
                          "Enterobacter ludwigii": "Enterobacter ludwigii (E. cloacae complex",
                          "Enterobacter roggenkampii": "Enterobacter roggenkampii (E. cloacae complex)",
-                         "Enterobacter bugandensis": "Enterobacter bugandensis (E. cloacae complex)"}
+                         "Enterobacter bugandensis": "Enterobacter bugandensis (E. cloacae complex)",
+			 "Citrobacter portucalensis": "Citrobacter portucalensis (C. freundii complex)",
+			 "Citrobacter werkmanii": "Citrobacter werkmanii (C. freundii complex)"}
 
-    report_df = report_df.replace({"Organism": e_cloacae_complex})
+    report_df = report_df.replace({"Organism": species_complex})
     report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
 
 

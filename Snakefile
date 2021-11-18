@@ -19,7 +19,7 @@ def find_path(exp, sample, barcode):
 #time.sleep(60)
 
 sample_table = pd.read_csv(config["samples"], sep="\t").set_index("Lab_ID")
-#sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.Sample_ID, x.Barcode), axis = 1)
+sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.Sample_ID, x.Barcode), axis = 1)
 
 SAMPLES = sample_table.index.values
 
@@ -27,11 +27,11 @@ TIME = config["time"]# move to config file
 
 print(SAMPLES, TIME)
 
-#include: "rules/move_files.smk"
-#include: "rules/host_remove.smk"
-#include: "rules/centrifuge.smk"
+include: "rules/move_files.smk"
+include: "rules/host_remove.smk"
+include: "rules/centrifuge.smk"
 include: "rules/amr.smk"
-#include: "rules/qc.smk"
+include: "rules/qc.smk"
 include: "rules/report.smk"
 
 

@@ -103,8 +103,8 @@ def cfg_to_html(path, threshold = THRESHOLD, target_file = TARGETS):
     df = df.round(2)
     df = df.drop(columns=["Tax_ID"])
     full = df.copy()
-    s = full.style.apply(is_target, axis=1)
-    s = s.format(precision=2)
+    #s = full.style.apply(is_target, axis=1)
+    #s = s.format(precision=2)
     cfg_dict["cfg_full"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     # cfg_dict["cfg_full"] = s.set_table_attributes('class="table table-striped"').hide_index().render()
     cfg_dict["micro_reads"] = sum(df["Counts"])
@@ -114,7 +114,7 @@ def cfg_to_html(path, threshold = THRESHOLD, target_file = TARGETS):
     else:
         cfg_dict["ic"] = "{}/{}%".format(int(ic["Counts"]), float(ic["Percentage"]))
     above_df = df.copy()
-    above_df = above_df[(above_df["Percentage"] > threshold) |(above_df["Organism"].str.contains(exceptions) ]
+    above_df = above_df[(above_df["Percentage"] > threshold) |(above_df["Organism"].str.contains(exceptions))]
     cfg_dict["cfg_top"] = above_df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     return cfg_dict
 
