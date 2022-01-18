@@ -1,6 +1,7 @@
 rule compile_report:
     input:
         centrifuge = "results/{sample}/{time}_hours/centrifuge/centrifuge_report.tsv",
+        centrifuge_raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
         amr_summary= "results/{sample}/{time}_hours/amr/scagaire_gene_summary.tsv",
         amr_report="results/{sample}/{time}_hours/amr/scagaire_report.tsv",
         qc="results/{sample}/{time}_hours/qc/nanostat_summary.txt",
