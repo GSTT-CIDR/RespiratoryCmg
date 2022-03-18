@@ -20,6 +20,7 @@ from datetime import datetime
 SAMPLE = snakemake.wildcards.sample
 INTERVAL = float(snakemake.wildcards.time)
 CFG_PATH = snakemake.input.centrifuge
+CFG_RAW_PATH = snakemake.input.centrifuge_raw
 AMR_SUMMARY = snakemake.input.amr_summary
 AMR_REPORT = snakemake.input.amr_report
 QC_PATH = snakemake.input.qc
@@ -30,6 +31,7 @@ BOOTSTRAP_CSS = snakemake.config["pdf"]["bootstrap"]
 SAMPLE_TABLE = snakemake.config["samples"]
 SAMTOOLS_STAT = snakemake.input.stats
 THRESHOLD = snakemake.config["abundance_threshold"]
+CFG_THRESHOLD = snakemake.config["cfg_score"]
 TARGETS = snakemake.config["targets"]
 
 
@@ -102,11 +104,7 @@ def cfg_to_html(path, threshold = THRESHOLD, target_file = TARGETS):
     df = pd.read_csv(path, sep="\t")
     df = df.round(2)
     df = df.drop(columns=["Tax_ID"])
-    full = df.copy()
-    #s = full.style.apply(is_target, axis=1)
-    #s = s.format(precision=2)
     cfg_dict["cfg_full"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
-    # cfg_dict["cfg_full"] = s.set_table_attributes('class="table table-striped"').hide_index().render()
     cfg_dict["micro_reads"] = sum(df["Counts"])
     ic = df[df["Organism"] == "Jonesia denitrificans"]
     if ic.empty:
@@ -117,6 +115,15 @@ def cfg_to_html(path, threshold = THRESHOLD, target_file = TARGETS):
     above_df = above_df[(above_df["Percentage"] > threshold) |(above_df["Organism"].str.contains(exceptions))]
     cfg_dict["cfg_top"] = above_df.to_html(classes="table table-striped", border=0, justify="left", index=False)
     return cfg_dict
+
+
+def unclassified_reads(path, threshold=CFG_THRESHOLD):
+    df = pd.read_csv(path, sep="\t")
+    unclass = len(df[df["seqID"].str.contains("unclassified")]["readID"].unique())
+    below = len(df[df["score"] < threshold]["readID"].unique()) - unclass
+    return {"unclass_reads": unclass,
+            "reads_below_threshold": below}
+
 
 
 def amr_summary(path):
@@ -181,6 +188,7 @@ report_dict.update(samtools_stats(SAMTOOLS_STAT))
 report_dict.update(patient_info(SAMPLE_TABLE, SAMPLE))
 report_dict.update(cfg_to_html(CFG_PATH))
 report_dict.update(summary_qc(QC_PATH))
+report_dict.update(unclassified_reads(CFG_RAW_PATH))
 report_dict["amr_summary"] = amr_summary(AMR_SUMMARY)
 report_dict["amr_report"] = amr_report(AMR_REPORT, AMR_SUMMARY)
 
@@ -190,6 +198,7 @@ env = Environment(loader=FileSystemLoader(".")) # Change to "." for grid
 template = env.get_template(REPORT_HTML)
 
 html_out = template.render({"report": report_dict})
+
 
 pdf_name = OUTPUT
 HTML(string=html_out).write_pdf(pdf_name,
