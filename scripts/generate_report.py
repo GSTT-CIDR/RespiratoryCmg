@@ -128,7 +128,7 @@ def unclassified_reads(path, threshold=CFG_THRESHOLD):
 
 def amr_summary(path):
     df = pd.read_csv(path, sep="\t", header=None, names=["Species", "Gene", "Hits"])
-    res = df[df["Hits"] > 2]
+    res = df[df["Hits"] >= 2]
     if res.empty:
         res = res.append({"Species": "No genes above threshold", "Gene": "NA", "Hits": "NA"}, ignore_index=True)
     return res.to_html(classes="table table-striped", border=0, justify="left", index=False)

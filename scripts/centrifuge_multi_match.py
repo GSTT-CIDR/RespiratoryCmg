@@ -302,7 +302,7 @@ def main():
                        "Enterobacter bugandensis": "Enterobacter bugandensis (E. cloacae complex)",
                        "Citrobacter portucalensis": "Citrobacter portucalensis (C. freundii complex)",
                        "Citrobacter werkmanii": "Citrobacter werkmanii (C. freundii complex)",
-                       "Klebsiella michiganensis: Klebsiella michiganensis (K. oxytoca complex)"}
+                       "Klebsiella michiganensis": "Klebsiella michiganensis (K. oxytoca complex)"}
 
     report_df = report_df.replace({"Organism": species_complex})
     report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")

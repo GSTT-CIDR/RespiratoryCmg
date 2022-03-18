@@ -1,6 +1,6 @@
 Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-21M209770	211117_testrur_pcs_IM	p0_a	1	sputum	2602591
-nic_a	211117_testrur_pcs_IM	nic_a	2	n/a	n/a
-pc1_a	211117_testrur_pcs_IM	pc1_a	1	n/a	n/a
-pc2_a	211117_testrur_pcs_IM	pc2_a	2	n/a	n/a
-pc3_a	211117_testrur_pcs_IM	pc3_a	3	n/a	n/a
+p110r2	220317_pilot_run61_fc	p110r2	11	bal	22M202211
+p113	220317_pilot_run61	p113	12	bal	22M202310
+p114	220317_pilot_run61	p114	1	ndl	22M202203
+pn_61	220317_pilot_run61	pn_61	2	n/a	n/a
+ntc52	220317_pilot_run61	ntc52	3	n/a	n/a
