@@ -4,6 +4,7 @@ from Bio import SeqIO
 from dateutil.parser import parse as dparse
 import pytz
 import time
+from gzip import open as gzopen
 utc=pytz.UTC
 
 THRESHOLD = float(snakemake.wildcards.time)
