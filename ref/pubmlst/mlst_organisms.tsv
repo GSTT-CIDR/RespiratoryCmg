@@ -1,0 +1,130 @@
+Folder	Organism	Rank
+abaumannii	Acinetobacter baumannii	Species
+abaumannii_2	Acinetobacter baumannii 2	Species
+achromobacter	Achromobacter	Genus
+aeromonas	Aeromonas	Genus
+afumigatus	Aspergillus fumigatus	Species
+aphagocytophilum	Anaplasma phagocytophilum	Species
+arcobacter	Arcobacter	Genus
+bbacilliformis	Bartonella bacilliformis	Species
+bcc	Burkholderia cepacia complex	Species
+bcereus	Bacillus cereus	Species
+bhampsonii	Brachyspira hampsonii	Species
+bhenselae	Bartonella henselae	Species
+bhyodysenteriae	Brachyspira hyodysenteriae	Species
+bintermedia	Beaufortia intermedia	Species
+blicheniformis	Bacillus licheniformis	Species
+bordetella	Bordetella	Genus
+borrelia	Borrelia	Genus
+bpilosicoli	Brachyspira pilosicoli	Species
+bpseudomallei	Burkholderia pseudomallei	Species
+brachyspira	Brachyspira	Genus
+brucella	Brucella	Genus
+bsubtilis	Bacillus subtilis	Species
+campylobacter	Campylobacter	Genus
+cbotulinum	Clostridium botulinum	Species
+cconcisus	Campylobacter concisus	Species
+cdifficile	Clostridium difficile	Species
+cdiphtheriae	Corynebacterium diphtheriae	Species
+cfetus	Campylobacter fetus	Species
+cfreundii	Citrobacter freundii	Species
+cglabrata	[Candida] glabrata	Species
+chelveticus	Campylobacter Helveticus	Species
+chlamydiales	Chlamydiales	Genus
+chyointestinalis	Campylobacter Hyointestinalis	Species
+cinsulaenigrae	Campylobacter insulaenigrae	Species
+clanienae	Campylobacter lanienae	Species
+clari	Campylobacter lari	Species
+cmaltaromaticum	Carnobacterium maltaromaticum	Species
+cronobacter	Cronobacter	Genus
+csepticum	Clostridium septicum	Species
+csinensis	Clonorchis sinensis	Species
+csputorum	Campylobacter Sputorum	Species
+cupsaliensis	Campylobacter upsaliensis	Species
+dnodosus	Dichelobacter nodosus	Species
+ecloacae	Enterobacter cloacae	Species
+ecoli	Escherichia coli	Species
+ecoli_2	Escherichia coli 2	Species
+edwardsiella	Edwardsiella	Genus
+efaecalis	Enterococcus faecalis	Species
+efaecium	Enterococcus faecium	Species
+fpsychrophilum	Flavobacterium psychrophilum	Species
+ganatis	Gallibacterium anatis	Species
+hcinaedi	Helicobacter cinaedi	Species
+hinfluenzae	Haemophilus influenzae	Species
+hparasuis	Haemophilus parasuis	Species
+hpylori	Heliobacter pylori	Species
+hsuis	Helicobacter suis	Species
+kaerogenes	Klebsiella aerogenes	Species
+kkingae	Kingella kingae	Species
+koxytoca	Klebsiella oxytoca	Species
+kpneumoniae	Klebsiella pneumoniae	Species
+kseptempunctata	Kudoa septempunctata	Species
+leptospira	Leptospira	Genus
+leptospira_2	Leptospira 2	Species
+leptospira_3	Leptospira 3	Species
+lmonocytogenes	Listeria monocytogenes	Species
+lsalivarius	Lactobacillus salivarius	Species
+mabscessus	Mycobacterium abscessus	Species
+magalactiae	Mycoplasma agalactiae	Species
+mbovis	Mycobacterium bovis	Species
+mcanis	Microsporum canis	Species
+mcaseolyticus	Macrococcus caseolyticus	Species
+mcatarrhalis	Moraxella catarrhalis	Species
+mhaemolytica	Mannheimia haemolytica	Species
+mhyopneumoniae	Mycoplasma hyopneumoniae	Species
+mhyorhinis	Mycoplasma hyorhinis	Species
+miowae	Mycoplasma iowae	Species
+mmassiliense	Mycobacterium massiliense	Species
+mplutonius	Melissococcus plutonius	Species
+mpneumoniae	Mycoplasma pneumoniae	Species
+msynoviae	Mycoplasma synoviae	Species
+neisseria	Neisseria	Genus
+orhinotracheale	Ornithobacterium rhinotracheale	Species
+otsutsugamushi	Orientia tsutsugamushi	Species
+pacnes	Cutibacterium acnes	Species
+paeruginosa	Pseudomonas aeruginosa	Species
+pdamselae	Photobacterium damselae	Species
+pfluorescens	Pseudomonas fluorescens	Species
+pgingivalis	Porphyromonas gingivalis	Species
+plarvae	Paenibacillus larvae	Species
+pmultocida_multihost	Pasteurella multocida multihost	Species
+pmultocida_rirdc	Pasteurella multocida rirdc	Species
+ppentosaceus	Pediococcus pentosaceus	Species
+ranatipestifer	Riemerella anatipestifer	Species
+rhodococcus	Rhodococcus	Genus
+sagalactiae	Streptococcus agalactiae	Species
+saureus	Staphylococcus aureus	Species
+sbsec	Streptococcus bovis/equinus complex	Species
+scanis	Streptococcus canis	Species
+sdysgalactiae	Streptococcus dysgalactiae	Species
+senterica	Salmonella enterica	Species
+sepidermidis	Staphylococcus epidermidis	Species
+sgallolyticus	Streptococcus gallolyticus	Species
+shaemolyticus	Staphylococcus haemolyticus	Species
+shominis	Staphylococcus hominis	Species
+sinorhizobium	Sinorhizobium	Genus
+slugdunensis	Staphylococcus lugdunensis	Species
+smaltophilia	Stenotrophomonas maltophilia	Species
+soralis	Streptococcus oralis	Species
+spneumoniae	Streptococcus pneumoniae	Species
+spseudintermedius	Staphylococcus pseudintermedius	Species
+spyogenes	Streptococcus pyogenes	Species
+ssuis	Streptococcus suis	Species
+sthermophilus	Streptococcus Thermophilus	Species
+sthermophilus_2	Streptococcus Thermophilus 2	Species
+streptomyces	Streptomyces	Genus
+suberis	Streptococcus uberis	Species
+szooepidemicus	Streptococcus zooepidemicus	Species
+taylorella	Taylorella	Genus
+tenacibaculum	Tenacibaculum	Genus
+vcholerae	Vibrio cholerae	Species
+vibrio	Vibrio	Genus
+vparahaemolyticus	Vibrio parahaemolyticus	Species
+vtapetis	Vibrio tapetis	Species
+vvulnificus	Vibrio vulnificus	Species
+wolbachia	Wolbachia	Genus
+xfastidiosa	Xylella fastidiosa	Species
+yersinia	Yersinia	Genus
+ypseudotuberculosis	Yersinia pseudotuberculosis	Species
+yruckeri	Yersinia ruckeri	Species
