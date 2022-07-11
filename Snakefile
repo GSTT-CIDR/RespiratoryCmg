@@ -25,7 +25,7 @@ SAMPLES = sample_table.index.values
 
 TIME = config["time"]# move to config file
 
-print(SAMPLES, TIME)
+#print(SAMPLES, TIME)
 
 include: "rules/move_files.smk"
 include: "rules/host_remove.smk"
