@@ -29,9 +29,9 @@ cdiphtheriae	Corynebacterium diphtheriae	Species
 cfetus	Campylobacter fetus	Species
 cfreundii	Citrobacter freundii	Species
 cglabrata	[Candida] glabrata	Species
-chelveticus	Campylobacter Helveticus	Species
+chelveticus	Campylobacter helveticus	Species
 chlamydiales	Chlamydiales	Genus
-chyointestinalis	Campylobacter Hyointestinalis	Species
+chyointestinalis	Campylobacter hyointestinalis	Species
 cinsulaenigrae	Campylobacter insulaenigrae	Species
 clanienae	Campylobacter lanienae	Species
 clari	Campylobacter lari	Species
@@ -39,12 +39,12 @@ cmaltaromaticum	Carnobacterium maltaromaticum	Species
 cronobacter	Cronobacter	Genus
 csepticum	Clostridium septicum	Species
 csinensis	Clonorchis sinensis	Species
-csputorum	Campylobacter Sputorum	Species
+csputorum	Campylobacter sputorum	Species
 cupsaliensis	Campylobacter upsaliensis	Species
 dnodosus	Dichelobacter nodosus	Species
 ecloacae	Enterobacter cloacae	Species
 ecoli	Escherichia coli	Species
-ecoli_2	Escherichia coli 2	Species
+Ecoli_2	Escherichia coli 2	Species
 edwardsiella	Edwardsiella	Genus
 efaecalis	Enterococcus faecalis	Species
 efaecium	Enterococcus faecium	Species
@@ -111,8 +111,8 @@ spneumoniae	Streptococcus pneumoniae	Species
 spseudintermedius	Staphylococcus pseudintermedius	Species
 spyogenes	Streptococcus pyogenes	Species
 ssuis	Streptococcus suis	Species
-sthermophilus	Streptococcus Thermophilus	Species
-sthermophilus_2	Streptococcus Thermophilus 2	Species
+sthermophilus	Streptococcus thermophilus	Species
+sthermophilus_2	Streptococcus thermophilus 2	Species
 streptomyces	Streptomyces	Genus
 suberis	Streptococcus uberis	Species
 szooepidemicus	Streptococcus zooepidemicus	Species
