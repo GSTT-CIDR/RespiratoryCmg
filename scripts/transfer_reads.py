@@ -35,7 +35,7 @@ def main():
                 read_time = dparse(
                     [i for i in comment.split() if i.startswith("start_time")][0].split("=")[1])
                 raw = f"@{name} {comment}\n{seq}\n+\n{qual}\n"
-                fastq_list.append(read_time, raw)
+                fastq_list.append([read_time, raw])
             # for record in SeqIO.parse(open(file, "rt"), "fastq"):
             #     read_time = dparse(
             #         [i for i in record.description.split() if i.startswith("start_time")][0].split("=")[1])
