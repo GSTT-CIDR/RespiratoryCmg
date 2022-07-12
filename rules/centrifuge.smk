@@ -6,8 +6,9 @@ rule run_centrifuge:
         raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
         report = temp("results/{sample}/{time}_hours/centrifuge/centrifuge_report_raw.tsv")
     shell:
-        "centrifuge -p 4 --min-hitlen 25 --mm -x {config[parameters][centrifuge][index]} -q {input} -S {output.raw} \
-        --report-file {output.report}"
+        """centrifuge -p 4 --min-hitlen 16 --mm -x {config[parameters][centrifuge][index][cmg]} -q {input} -S {output.raw} \
+        --report-file {output.report}
+        """
 
 
 
@@ -15,7 +16,7 @@ rule run_centrifuge:
 rule parse_centrifuge:
     input:
         file = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
-        fasta = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
+        fastq = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
     output:
         report = "results/{sample}/{time}_hours/centrifuge/centrifuge_report.tsv",
         read = "results/{sample}/{time}_hours/centrifuge/read_assignments.tsv",
@@ -23,6 +24,22 @@ rule parse_centrifuge:
         multi = "results/{sample}/{time}_hours/centrifuge/multi_read.json"
     script:
         "../scripts/centrifuge_multi_match.py"
+
+rule unclassified_reads:
+    input:
+        fastq = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
+        raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv"
+    output:
+        fastq = "results/{sample}/{time}_hours/unclassified/{sample}_{time}_hours_unclassified.fastq",
+        report = "results/{sample}/{time}_hours/unclassified/centrifuged_unclass_report.tsv",
+        raw = "results/{sample}/{time}_hours/unclassified/centrifuged_unclass_raw.tsv"
+    shell:
+        """
+        python3 scripts/extract_reads.py -f {input.fastq} -c {input.raw} -t "unclassified" -o {output.fastq}
+        centrifuge -p 4 --min-hitlen 16 -k 1 --mm -x {config[parameters][centrifuge][index][nt]} -q {input} -S {output.raw}\
+        --report-file {output.report}
+        """
+
 
 
 

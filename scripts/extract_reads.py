@@ -9,6 +9,7 @@ from Bio import SeqIO
 import pandas as pd
 import argparse
 import sys
+import pyfastx
 
 
 def get_readIDs(args):
@@ -76,7 +77,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--fastq", required=True, help="Fastq file of sample")
-    parser.add_argument("-c", "--cfg", required=True, help="Centrifuge data of sample")
+    parser.add_argument("-c", "--cfg", required=True, help="Centrifuge data of sample (either centrifuge_raw.tsv or read_assigments.tsv")
     parser.add_argument("-t", "--target", default="unclassified", help="Target organisms. WARNING: Substring style matching (Default: unclassified)")
     parser.add_argument("-o", "--output", nargs="?", default = "", help="name of output fasta (Default: stdout)")
     args = parser.parse_args()

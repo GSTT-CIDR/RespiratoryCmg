@@ -16,7 +16,7 @@ rule MLST:
         then
             echo "No MLST scheme" > {output.profiles}/${{out}}_mlst.tsv
         else
-            python3 scripts/extract_reads_mlst.py -f {input.fastq} -c {input.read} -t "$i" | krocus $path - -o {output.profiles}/${{out}}_mlst.tsv
+            python3 scripts/extract_reads.py -f {input.fastq} -c {input.read} -t "$i" | krocus $path - -o {output.profiles}/${{out}}_mlst.tsv
         fi
         done < {input.targets}
         """
