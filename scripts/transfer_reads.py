@@ -4,6 +4,7 @@ from Bio import SeqIO
 from dateutil.parser import parse as dparse
 import pytz
 import time
+import pyfastx
 utc=pytz.UTC
 
 THRESHOLD = float(snakemake.wildcards.time)
@@ -29,10 +30,16 @@ def main():
         to_read = [i for i in file_list if i not in read_files]
         print("Processing files {}".format(to_read))
         for file in to_read:
-            for record in SeqIO.parse(open(file, "rt"), "fastq"):
+            # New module pyfastx 
+            for name,seq,qual,comment in pyfastx.Fastx(file):
                 read_time = dparse(
-                    [i for i in record.description.split() if i.startswith("start_time")][0].split("=")[1])
-                fastq_list.append([read_time, record.format("fastq")])
+                    [i for i in comment.split() if i.startswith("start_time")][0].split("=")[1])
+                raw = f"@{name} {comment}\n{seq}\n+\n{qual}\n"
+                fastq_list.append([read_time, raw])
+            # for record in SeqIO.parse(open(file, "rt"), "fastq"):
+            #     read_time = dparse(
+            #         [i for i in record.description.split() if i.startswith("start_time")][0].split("=")[1])
+                # fastq_list.append([read_time, record.format("fastq")])
                 if read_time < start_time:
                     start_time = read_time
                     cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD, minutes=sleep_interval) # Added the 5 minute sleep to allow read queue to write to files
