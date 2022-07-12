@@ -1,6 +1,2 @@
 Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-p110r2	220317_pilot_run61_fc	p110r2	11	bal	22M202211
-p113	220317_pilot_run61	p113	12	bal	22M202310
-p114	220317_pilot_run61	p114	1	ndl	22M202203
-pn_61	220317_pilot_run61	pn_61	2	n/a	n/a
-ntc52	220317_pilot_run61	ntc52	3	n/a	n/a
+New_reagents_only	220711_contamination_test3	contam_test3	5	n/a	n/a

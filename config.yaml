@@ -17,6 +17,9 @@ taxonomy:
   speciesTaxMeta: "ref/refseq/Assembly_summary/combined_assembly_summary.txt"
 amr:
   scagaire: "ref/scagaire_genes.txt"
+mlst:
+  directory: "ref/pubmlst/"
+  list: "ref/pubmlst/mlst_organisms.tsv"
 pdf:
   html: "ref/Template/report_template.html"
   css: "ref/Template/report.css"
