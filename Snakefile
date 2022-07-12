@@ -38,5 +38,6 @@ include: "rules/mlst.smk"
 
 rule all:
     input:
-        expand("reports/{sample}/{sample}_{time}_hours_report.pdf", sample = SAMPLES, time = TIME)
-        expand("reports/{sample}/{time}_hours/mlst/", sample= SAMPLES, time= TIME)
+        expand("reports/{sample}/{sample}_{time}_hours_report.pdf", sample = SAMPLES, time = TIME),
+	expand("results/{sample}/{time}_hours/transfer/transferred.txt", sample = SAMPLES, time = TIME)
+        #expand("reports/{sample}/{time}_hours/mlst/", sample= SAMPLES, time= TIME)

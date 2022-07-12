@@ -1,6 +1,2 @@
 Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-21M209770	211117_testrur_pcs_IM	p0_a	1	sputum	2602591
-nic_a	211117_testrur_pcs_IM	nic_a	2	n/a	n/a
-pc1_a	211117_testrur_pcs_IM	pc1_a	1	n/a	n/a
-pc2_a	211117_testrur_pcs_IM	pc2_a	2	n/a	n/a
-pc3_a	211117_testrur_pcs_IM	pc3_a	3	n/a	n/a
+New_reagents_only	220711_contamination_test3	contam_test3	5	n/a	n/a

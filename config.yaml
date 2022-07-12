@@ -1,5 +1,5 @@
 samples: "sample_table.tsv"
-time: [0.5. 2. 16]
+time: [0.5,2,16]
 abundance_threshold: 1
 cfg_score: 8000
 targets: "ref/target_organisms.txt"
