@@ -1,2 +1,6 @@
 Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-New_reagents_only	220711_contamination_test3	contam_test3	5	n/a	n/a
+JD1	220721_GH_training3	GH_traning3	1	n/a	n/a
+JD2	220721_GH_training3	GH_traning3	2	n/a	n/a
+N1	220721_GH_training3	GH_traning3	3	n/a	n/a
+N2	220721_GH_training3	GH_traning3	4	n/a	n/a
+NTC2	220721_GH_training3	GH_traning3	6	n/a	n/a

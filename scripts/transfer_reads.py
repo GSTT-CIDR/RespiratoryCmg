@@ -19,7 +19,7 @@ def main():
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
     sleep_interval = 5 # minutes
-    fastq_list = []
+    fastq_dict = dict()
 
     print("Wait interval set to {} minutes".format(sleep_interval))
     KEEP_GOING = True
@@ -35,7 +35,7 @@ def main():
                 read_time = dparse(
                     [i for i in comment.split() if i.startswith("start_time")][0].split("=")[1])
                 raw = f"@{name} {comment}\n{seq}\n+\n{qual}\n"
-                fastq_list.append([read_time, raw])
+                fastq_dict[name] = [read_time, raw]
             # for record in SeqIO.parse(open(file, "rt"), "fastq"):
             #     read_time = dparse(
             #         [i for i in record.description.split() if i.startswith("start_time")][0].split("=")[1])
@@ -55,10 +55,10 @@ def main():
             KEEP_GOING = False
         else:
             print("Cut-off time set to {} (including 5 minute buffer time) with Threshold of {} hours, still running".format(cutoff_time, THRESHOLD))
-    print("Reading {} reads".format(len(fastq_list)))
+    print("Reading {} reads".format(len(fastq_dict)))
     passed = 0
     with open(OUTFILE, "w") as of:
-        for r_time, fq in fastq_list:
+        for r_time, fq in fastq_dict.values():
             if r_time < cutoff_time:
                 passed += 1
                 of.write(fq)

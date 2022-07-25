@@ -6,7 +6,7 @@ rule run_centrifuge:
         raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
         report = temp("results/{sample}/{time}_hours/centrifuge/centrifuge_report_raw.tsv")
     shell:
-        """centrifuge -p 4 --min-hitlen 16 --mm -x {config[parameters][centrifuge][index][cmg]} -q {input} -S {output.raw} \
+        """centrifuge -p 4 --mm -x {config[parameters][centrifuge][index][cmg]} -q {input} -S {output.raw} \
         --report-file {output.report}
         """
 
@@ -27,7 +27,7 @@ rule parse_centrifuge:
 
 rule unclassified_reads:
     input:
-        fastq = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq"
+        fastq = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq",
         raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv"
     output:
         fastq = "results/{sample}/{time}_hours/unclassified/{sample}_{time}_hours_unclassified.fastq",
@@ -36,7 +36,7 @@ rule unclassified_reads:
     shell:
         """
         python3 scripts/extract_reads.py -f {input.fastq} -c {input.raw} -t "unclassified" -o {output.fastq}
-        centrifuge -p 4 --min-hitlen 16 -k 1 --mm -x {config[parameters][centrifuge][index][nt]} -q {input} -S {output.raw}\
+        centrifuge -p 4 -k 1 --mm -x {config[parameters][centrifuge][index][nt]} -q {input} -S {output.raw}\
         --report-file {output.report}
         """
 
