@@ -1,6 +1,2 @@
-Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-JD1	220721_GH_training3	GH_traning3	1	n/a	n/a
-JD2	220721_GH_training3	GH_traning3	2	n/a	n/a
-N1	220721_GH_training3	GH_traning3	3	n/a	n/a
-N2	220721_GH_training3	GH_traning3	4	n/a	n/a
-NTC2	220721_GH_training3	GH_traning3	6	n/a	n/a
+LabID	Experiment	SampleID	Barcode	SampleType	PatientID
+A_EtOH_B_beads	220802_contamination_test8	contam_test8_B	4	n/a	n/a
