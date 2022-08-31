@@ -18,8 +18,8 @@ def find_path(exp, sample, barcode):
 #print("Waiting 1 minute before running")
 #time.sleep(60)
 
-sample_table = pd.read_csv(config["samples"], sep="\t").set_index("Lab_ID")
-sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.Sample_ID, x.Barcode), axis = 1)
+sample_table = pd.read_csv(config["samples"], sep="\t").set_index("LabID")
+sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.SampleID, x.Barcode), axis = 1)
 
 SAMPLES = sample_table.index.values
 
@@ -33,8 +33,11 @@ include: "rules/centrifuge.smk"
 include: "rules/amr.smk"
 include: "rules/qc.smk"
 include: "rules/report.smk"
+include: "rules/mlst.smk"
 
 
 rule all:
     input:
-        expand("reports/{sample}/{sample}_{time}_hours_report.pdf", sample = SAMPLES, time = TIME)
+        expand("reports/{sample}/{sample}_{time}_hours_report.pdf", sample = SAMPLES, time = TIME),
+	expand("results/{sample}/{time}_hours/transfer/transferred.txt", sample = SAMPLES, time = TIME)
+        #expand("reports/{sample}/{time}_hours/mlst/", sample= SAMPLES, time= TIME)

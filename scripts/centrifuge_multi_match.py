@@ -13,7 +13,7 @@ CENTRIFUGE_FILE = snakemake.input.file
 CFG_THRESHOLD = snakemake.config["cfg_score"]
 TAXMETA = snakemake.config["taxonomy"]["speciesTaxMeta"]
 FILENAMES = snakemake.config["taxonomy"]["speciesFileNames"]
-FASTA = snakemake.input.fasta
+FASTQ = snakemake.input.fastq
 GENOME_DIR = snakemake.config["taxonomy"]["refseqDir"]
 MULTI_OUTPUT = snakemake.output.multi
 FAILED_OUTPUT = snakemake.output.failed
@@ -126,11 +126,11 @@ def split_hits(df, tax):
     return unique_dict, multi_dict
 
 
-def create_fasta_dict(fasta):
-    fasta_dict = {}
-    for name, seq, qual in mp.fastx_read(fasta, read_comment=False):
-        fasta_dict[name] = seq
-    return fasta_dict
+def create_fastq_dict(fastq):
+    fastq_dict = {}
+    for name, seq, qual in mp.fastx_read(fastq, read_comment=False):
+        fastq_dict[name] = seq
+    return fastq_dict
 
 
 # def create_tax_dict(taxmeta, filenames):
@@ -179,13 +179,13 @@ def make_aligner(tax_dict, genome_dir, tax_id):
         return None
 
 
-def get_fasta(read_id, fasta_dict):
-    fasta = fasta_dict[read_id]
-    return fasta
+def get_fastq(read_id, fastq_dict):
+    fastq = fastq_dict[read_id]
+    return fastq
 
 
-def alignment(fasta, aligner):
-    mapping = aligner.map(fasta)
+def alignment(fastq, aligner):
+    mapping = aligner.map(fastq)
     try:
         hit = next(mapping)
         res = {"hit": hit.ctg,
@@ -200,7 +200,7 @@ def alignment(fasta, aligner):
     return res
 
 
-def get_read_alignments(tax_ids, genome_dir, tax_dict, fasta, tax):
+def get_read_alignments(tax_ids, genome_dir, tax_dict, fastq, tax):
     hit_dict = dict()
     for tax_id in tax_ids:
         node = tax.node(str(tax_id))
@@ -211,7 +211,7 @@ def get_read_alignments(tax_ids, genome_dir, tax_dict, fasta, tax):
                 hit_dict[tax_id] = {"alignment": False,
                                     "reason": "No reference genome"}
             else:
-                hit_dict[tax_id] = alignment(fasta, aligner)
+                hit_dict[tax_id] = alignment(fastq, aligner)
         else:
             hit_dict[tax_id] = {"alignment": False,
                                 "reason": "tax above species level: {}".format(node.rank)}
@@ -239,7 +239,7 @@ def main():
     df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
     # taxDict = create_tax_dict(TAXMETA, FILENAMES)
     taxDict = create_tax_dict(DICT_FILE)
-    fasta_dict = create_fasta_dict(FASTA)
+    fastq_dict = create_fastq_dict(FASTQ)
 
     print("data loaded.... starting counts")
 
@@ -250,10 +250,10 @@ def main():
     # Multi match sort
     multi_res = dict()
     for key, value in multi_hit_dict.items():
-        fasta = get_fasta(key, fasta_dict)
+        fastq = get_fastq(key, fastq_dict)
         taxIDs = [int(t.id) for t in value]
         try:
-            multi_res[key] = get_read_alignments(taxIDs, GENOME_DIR, taxDict, fasta, tax)
+            multi_res[key] = get_read_alignments(taxIDs, GENOME_DIR, taxDict, fastq, tax)
         except KeyError:
             failed[key] = taxIDs
 

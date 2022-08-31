@@ -7,7 +7,9 @@ parameters:
   hg38:
     index: "ref/hg38/hg38_new.mmi"
   centrifuge:
-    index: "ref/Cmg_index/pilot_cmg"
+    index:
+      cmg: "ref/Cmg_index/cmg_pilot_phase3"
+      nt: "ref/Cmg_index/nt"
 taxonomy:
   dictFile: "ref/refseq/Assembly_summary/argos_taxdict.tsv"
   names: "ref/refseq/taxonomy/names.dmp"
@@ -17,6 +19,9 @@ taxonomy:
   speciesTaxMeta: "ref/refseq/Assembly_summary/combined_assembly_summary.txt"
 amr:
   scagaire: "ref/scagaire_genes.txt"
+mlst:
+  directory: "ref/pubmlst/"
+  list: "ref/pubmlst/mlst_organisms.tsv"
 pdf:
   html: "ref/Template/report_template.html"
   css: "ref/Template/report.css"

@@ -4,7 +4,7 @@ from Bio import SeqIO
 from dateutil.parser import parse as dparse
 import pytz
 import time
-from gzip import open as gzopen
+import pyfastx
 utc=pytz.UTC
 
 THRESHOLD = float(snakemake.wildcards.time)
@@ -19,7 +19,7 @@ def main():
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
     sleep_interval = 5 # minutes
-    fastq_list = []
+    fastq_dict = dict()
 
     print("Wait interval set to {} minutes".format(sleep_interval))
     KEEP_GOING = True
@@ -30,10 +30,16 @@ def main():
         to_read = [i for i in file_list if i not in read_files]
         print("Processing files {}".format(to_read))
         for file in to_read:
-            for record in SeqIO.parse(open(file, "rt"), "fastq"):
+            # New module pyfastx 
+            for name,seq,qual,comment in pyfastx.Fastx(file):
                 read_time = dparse(
-                    [i for i in record.description.split() if i.startswith("start_time")][0].split("=")[1])
-                fastq_list.append([read_time, record.format("fastq")])
+                    [i for i in comment.split() if i.startswith("start_time")][0].split("=")[1])
+                raw = f"@{name} {comment}\n{seq}\n+\n{qual}\n"
+                fastq_dict[name] = [read_time, raw]
+            # for record in SeqIO.parse(open(file, "rt"), "fastq"):
+            #     read_time = dparse(
+            #         [i for i in record.description.split() if i.startswith("start_time")][0].split("=")[1])
+                # fastq_list.append([read_time, record.format("fastq")])
                 if read_time < start_time:
                     start_time = read_time
                     cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD, minutes=sleep_interval) # Added the 5 minute sleep to allow read queue to write to files
@@ -49,10 +55,10 @@ def main():
             KEEP_GOING = False
         else:
             print("Cut-off time set to {} (including 5 minute buffer time) with Threshold of {} hours, still running".format(cutoff_time, THRESHOLD))
-    print("Reading {} reads".format(len(fastq_list)))
+    print("Reading {} reads".format(len(fastq_dict)))
     passed = 0
     with open(OUTFILE, "w") as of:
-        for r_time, fq in fastq_list:
+        for r_time, fq in fastq_dict.values():
             if r_time < cutoff_time:
                 passed += 1
                 of.write(fq)

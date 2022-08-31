@@ -1,2 +1,5 @@
-Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-p110r2	220317_pilot_run61_fc	p110r2	11	bal	22M202211
+LabID	Experiment	SampleID	Barcode	SampleType	PatientID
+EtOH_A_Beads_A	220725_contamination_test6	contam_test6	1	n/a	n/a
+EtOH_B_Beads_B	220725_contamination_test6	contam_test6	2	n/a	n/a
+water_contam_test6	220725_contamination_test6	contam_test6	3	n/a	n/a
+EtOH_A_Beads_B	220725_contamination_test6	contam_test6	4	n/a	n/a

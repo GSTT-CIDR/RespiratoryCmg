@@ -11,3 +11,15 @@ rule compile_report:
 
     script:
         "../scripts/generate_report.py"
+
+rule transfer_qnap:
+    input:
+        "reports/{sample}/{sample}_{time}_hours_report.pdf"
+    output:
+        encrypt = "reports/encrypted/{sample}/{sample}_{time}_hours_report_encrypt.pdf",
+        transfer = "results/{sample}/{time}_hours/transfer/transferred.txt"
+    shell:
+        """
+        pdftk {input} output {output.encrypt} user_pw cidr22
+        rsync -r {output.encrypt} qnap://mnt/flavia/metagenomics/pilot/reports/ > {output.transfer}
+        """
