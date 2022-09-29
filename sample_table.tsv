@@ -1,2 +1,6 @@
 LabID	Experiment	SampleID	Barcode	SampleType	PatientID
-A_EtOH_B_beads	220802_contamination_test8	contam_test8_B	4	n/a	n/a
+cs-5r	220928_cs_run3	cs_run3	10	BAL	8281161H
+cs-6	220928_cs_run3	cs_run3	11	SPT	8287311P
+cs-5_2709	220928_cs_run3	cs_run3	7	BAL	8281161H
+cs_jd3	220928_cs_run3	cs_run3	1	n/a	n/a
+Cs-ntc3	220928_cs_run3	cs_run3	2	n/a	n/a

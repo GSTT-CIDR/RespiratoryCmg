@@ -5,7 +5,9 @@ from dateutil.parser import parse as dparse
 import pytz
 import time
 import pyfastx
-utc=pytz.UTC
+utc=pytz.UTC	
+gb = pytz.timezone("GB")
+
 
 THRESHOLD = float(snakemake.wildcards.time)
 FQ_DIR = snakemake.input.seq_dir
@@ -14,7 +16,7 @@ LOGFILE = snakemake.log[0]
 
 def main():
     read_files = []
-    start_time= utc.localize(datetime.datetime.now())
+    start_time= gb.localize(datetime.datetime.now())
     cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD)
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
@@ -24,7 +26,7 @@ def main():
     print("Wait interval set to {} minutes".format(sleep_interval))
     KEEP_GOING = True
     while KEEP_GOING:
-        current_time = utc.localize(datetime.datetime.now())
+        current_time = gb.localize(datetime.datetime.now())
         time.sleep(sleep_interval * 60)
         file_list = glob.glob("{}/*".format(FQ_DIR))
         to_read = [i for i in file_list if i not in read_files]
