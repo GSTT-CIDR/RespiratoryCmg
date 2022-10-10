@@ -20,6 +20,6 @@ rule transfer_qnap:
         transfer = "results/{sample}/{time}_hours/transfer/transferred.txt"
     shell:
         """
-        pdftk {input} output {output.encrypt} user_pw cidrcmg2022!
+        pdftk {input} output {output.encrypt} user_pw cidr22
         rsync -r {output.encrypt} qnap://mnt/flavia/metagenomics/pilot/reports/ > {output.transfer}
         """

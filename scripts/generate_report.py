@@ -80,13 +80,13 @@ def samtools_stats(path):
 
 def patient_info(path, id):
     df = pd.read_csv(path, sep = "\t")
-    df = df[df["Lab_ID"] == str(id)]
-    sample_dict = {"Lab_ID" : df["Lab_ID"].values[0],
+    df = df[df["LabID"] == str(id)]
+    sample_dict = {"LabID" : df["LabID"].values[0],
                    "Experiment": df["Experiment"].values[0],
-                   "Sample_ID": df["Sample_ID"].values[0],
+                   "SampleID": df["SampleID"].values[0],
                    "Barcode": df["Barcode"].values[0],
-                   "Sample_Type": df["Sample_Type"].values[0],
-                   "Patient_ID": df["Patient_ID"].values[0]}
+                   "SampleType": df["SampleType"].values[0],
+                   "PatientID": df["PatientID"].values[0]}
     return sample_dict
 
 def is_target(s, target_file = TARGETS):
