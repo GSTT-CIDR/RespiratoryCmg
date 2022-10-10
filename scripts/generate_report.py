@@ -80,13 +80,13 @@ def samtools_stats(path):
 
 def patient_info(path, id):
     df = pd.read_csv(path, sep = "\t")
-    df = df[df["Lab_ID"] == str(id)]
-    sample_dict = {"Lab_ID" : df["Lab_ID"].values[0],
+    df = df[df["LabID"] == str(id)]
+    sample_dict = {"LabID" : df["LabID"].values[0],
                    "Experiment": df["Experiment"].values[0],
-                   "Sample_ID": df["Sample_ID"].values[0],
+                   "SampleID": df["SampleID"].values[0],
                    "Barcode": df["Barcode"].values[0],
-                   "Sample_Type": df["Sample_Type"].values[0],
-                   "Patient_ID": df["Patient_ID"].values[0]}
+                   "SampleType": df["SampleType"].values[0],
+                   "PatientID": df["PatientID"].values[0]}
     return sample_dict
 
 def is_target(s, target_file = TARGETS):
@@ -128,7 +128,7 @@ def unclassified_reads(path, threshold=CFG_THRESHOLD):
 
 def amr_summary(path):
     df = pd.read_csv(path, sep="\t", header=None, names=["Species", "Gene", "Hits"])
-    res = df[df["Hits"] > 2]
+    res = df[df["Hits"] >= 2]
     if res.empty:
         res = res.append({"Species": "No genes above threshold", "Gene": "NA", "Hits": "NA"}, ignore_index=True)
     return res.to_html(classes="table table-striped", border=0, justify="left", index=False)
