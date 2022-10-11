@@ -1,7 +1,7 @@
 samples: "sample_table.tsv"
 time: [0.5,2,16]
 abundance_threshold: 1
-cfg_score: 8000
+cfg_score: 0
 targets: "ref/target_organisms.txt"
 parameters:
   hg38:
@@ -9,7 +9,7 @@ parameters:
   centrifuge:
     index:
       cmg: "ref/Cmg_index/cmg_pilot_phase3"
-      nt: "ref/Cmg_index/nt"
+      viral: "ref/Cmg_index/cmg_viral"
 taxonomy:
   dictFile: "ref/refseq/Assembly_summary/argos_taxdict.tsv"
   names: "ref/refseq/taxonomy/names.dmp"
