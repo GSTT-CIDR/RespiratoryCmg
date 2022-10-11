@@ -5,7 +5,6 @@ Using centrifuge results, extract reads matching a particular target - Default i
 but is in development to extract reads matching a particular genus
 """
 
-from Bio import SeqIO
 import pandas as pd
 import argparse
 import sys
@@ -31,7 +30,7 @@ def get_readIDs(args):
     cfg = args.cfg
     target = args.target
     df = pd.read_csv(cfg, sep="\t")
-    if target == "unclassifed":
+    if target == "unclassified":
         readIDs = df[df["seqID"].str.contains(target)]["readID"].tolist()
     else:
         readIDs = df[df["Organism"].str.contains(target)]["readID"].tolist()
@@ -58,9 +57,10 @@ def extract_reads(args,readIDs):
     """
     fastq = args.fastq
     reads = []
-    for record in SeqIO.parse(fastq, "fastq"):
-        if record.id in readIDs:
-            reads.append(record.format("fastq"))
+    for name, seq, qual, comment in pyfastx.Fastx(fastq):
+        if name in readIDs:
+            raw = f"@{name} {comment}\n{seq}\n+\n{qual}\n"
+            reads.append(raw)
     output = open(args.output, "w") if args.output else sys.stdout
     for r in reads:
         output.write(r)
