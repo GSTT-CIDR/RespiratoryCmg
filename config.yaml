@@ -8,8 +8,8 @@ parameters:
     index: "ref/hg38/hg38_new.mmi"
   centrifuge:
     index:
-      cmg: "ref/Cmg_index/cmg_pilot_phase3"
-      viral: "ref/Cmg_index/cmg_viral"
+      cmg: "ref/Cmg_index/bacterial/cmg_pilot_phase3"
+      viral: "ref/Cmg_index/viral/cmg_viral"
 taxonomy:
   dictFile: "ref/refseq/Assembly_summary/argos_taxdict.tsv"
   names: "ref/refseq/taxonomy/names.dmp"

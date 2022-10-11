@@ -31,7 +31,7 @@ def get_readIDs(args):
     cfg = args.cfg
     target = args.target
     df = pd.read_csv(cfg, sep="\t")
-    if target == "unclassifed":
+    if target == "unclassified":
         readIDs = df[df["seqID"].str.contains(target)]["readID"].tolist()
     else:
         readIDs = df[df["Organism"].str.contains(target)]["readID"].tolist()
