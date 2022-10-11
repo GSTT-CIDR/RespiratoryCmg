@@ -34,6 +34,7 @@ include: "rules/amr.smk"
 include: "rules/qc.smk"
 include: "rules/report.smk"
 include: "rules/mlst.smk"
+include: "rules/viral.smk"
 
 
 rule all:
