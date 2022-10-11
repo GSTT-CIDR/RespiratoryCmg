@@ -90,6 +90,15 @@ def lca(multi_dict, tax):
         lca_dict[k] = lca.id
     return lca_dict
 
+
+def get_name(taxID, tax):
+    name = tax.node(str(taxID))
+    if name is None:
+        name = "NA"
+        return name
+    else:
+        return name.name
+
      
 
 def main():
