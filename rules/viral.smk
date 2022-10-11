@@ -14,10 +14,9 @@ rule parseViral:
     input:
         raw = "results/{sample}/{time}_hours/viral/centrifuge_viral_raw.tsv"
     output:
-        report = "results/{sample}/{time}_hours/viral/centrifuge_viral_report.tsv"
-    shell:
-        """
-        python3 scripts/parse_viral.py
-        """
+        report = "results/{sample}/{time}_hours/viral/centrifuge_viral_report.tsv",
+        read = "results/{sample}/{time}_hours/viral/read_assignments.tsv"
+    script:
+        "../scripts/parse_viral.py"
 
 
