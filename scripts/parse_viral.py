@@ -14,20 +14,26 @@ REPORT_OUTPUT = snakemake.output.report
 # NAMES = "ref/refseq/taxonomy/names.dmp"
 
 
-def get_species(query, tax, name=False):
-    if name:
-        taxID = tax.find_by_name(query).id
-    else:
-        taxID = str(query)
-    if taxID is None:
-        raise IOError("Invalid name")
-    if tax.node(taxID) is None:
-        return None
-    if tax.parent(taxID, at_rank="species group") is None:
-        organisms = tax.parent(taxID, at_rank="species").name
-    else:
-        organisms = tax.parent(taxID, at_rank="species group").name
-    return organisms
+def species_id(taxID, tax, rank = "species"):
+    """
+    checks if taxID is a below taxonomy rank specified and returns that rank.
+
+    Parameters
+    ----------
+    taxID
+    tax
+    rank
+
+    Returns
+    -------
+
+    """
+    taxobj = tax.parent(str(taxID), at_rank = rank)
+    if taxobj is None:
+        return tax.node(str(taxID))
+    if taxobj.rank == rank:
+        return taxobj
+    return None
 
 def split_hits(df, tax):
     """
