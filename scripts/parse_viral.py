@@ -7,6 +7,8 @@ import taxonomy
 NODES = snakemake.config["taxonomy"]["nodes"]
 NAMES = snakemake.config["taxonomy"]["names"]
 CENTRIFUGE_FILE = snakemake.input.raw
+READ_OUTPUT = snakemake.output.read
+REPORT_OUTPUT = snakemake.output.report
 
 # NODES = "ref/refseq/taxonomy/nodes.dmp"
 # NAMES = "ref/refseq/taxonomy/names.dmp"

@@ -17,7 +17,7 @@ rule parseViral:
         report = "results/{sample}/{time}_hours/viral/centrifuge_viral_report.tsv"
     shell:
         """
-        python3 scripts/parse_viral.py -i {input.raw} -o {output.raw}
+        python3 scripts/parse_viral.py
         """
 
 
