@@ -26,6 +26,3 @@ pdf:
   html: "ref/Template/report_template.html"
   css: "ref/Template/report.css"
   bootstrap: "ref/Template/bootstrap.css"
-    
-
-
