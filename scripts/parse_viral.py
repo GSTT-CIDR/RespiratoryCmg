@@ -88,7 +88,7 @@ def lca(multi_dict, tax):
         lca = v[0]
         for i in range(1,len(v)):
             lca = tax.lca(lca.id, v[i].id)
-        lca_dict[k] = lca.id
+        lca_dict[k] = lca
     return lca_dict
 
 
