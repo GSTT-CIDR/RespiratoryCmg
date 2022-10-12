@@ -105,6 +105,7 @@ def get_name(taxID, tax):
 def main():
     tax = taxonomy.Taxonomy.from_ncbi(NODES, NAMES)
     df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
+    df = df[df["taxID"] > 0]
     report_dict, multi_hit_dict = split_hits(df, tax)
     lca_dict = lca(multi_hit_dict, tax)
     report_dict.update(lca_dict)
