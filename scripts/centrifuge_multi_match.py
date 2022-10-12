@@ -290,7 +290,7 @@ def main():
     report_df = pd.DataFrame.from_dict(report_values, orient="index").reset_index()
     report_df.columns = ["Tax_ID", "Counts"]
     report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name if (tax.node(str(x)) is not None) else "ARGOS ISOLATE")
-    report_df["Percentage"] = report_df["Counts"] / total_counts * 100
+    report_df["Percentage"] = round(report_df["Counts"] / total_counts * 100, 3)
     report_df = report_df.sort_values(by="Percentage", ascending=False)
     report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
 
