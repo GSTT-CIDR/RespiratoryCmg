@@ -1,6 +1,7 @@
 import argparse
 import pandas as pd
 import taxonomy
+from collections import Counter
 
 
 # SNAKEMAKE ARGUMENTS

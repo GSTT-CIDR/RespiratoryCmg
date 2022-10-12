@@ -1,5 +1,6 @@
 import pandas as pd
 import mappy as mp
+import pyfastx
 import os
 import time
 import taxonomy
@@ -128,7 +129,7 @@ def split_hits(df, tax):
 
 def create_fastq_dict(fastq):
     fastq_dict = {}
-    for name, seq, qual in mp.fastx_read(fastq, read_comment=False):
+    for name, seq, qual, comment in pyfastx.Fastx(fastq):
         fastq_dict[name] = seq
     return fastq_dict
 
