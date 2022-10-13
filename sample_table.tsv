@@ -1,6 +1,5 @@
 LabID	Experiment	SampleID	Barcode	SampleType	PatientID
-cs-5r	220928_cs_run3	cs_run3	10	BAL	8281161H
-cs-6	220928_cs_run3	cs_run3	11	SPT	8287311P
-cs-5_2709	220928_cs_run3	cs_run3	7	BAL	8281161H
-cs_jd3	220928_cs_run3	cs_run3	1	n/a	n/a
-Cs-ntc3	220928_cs_run3	cs_run3	2	n/a	n/a
+cs-23	221012_cs_run11	cs_run11	8	bal	8297378z
+cs-24	221012_cs_run11	cs_run11	9	bal	5621578t
+Cs-jd11	221012_cs_run11	cs_run11	10	n/a	n/a
+Cs-ntc11	221012_cs_run11	cs_run11	11	n/a	n/a
