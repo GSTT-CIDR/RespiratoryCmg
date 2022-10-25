@@ -8,7 +8,7 @@ parameters:
     index: "ref/hg38/hg38_new.mmi"
   centrifuge:
     index:
-      cmg: "ref/Cmg_index/cmg_pilot_phase3"
+      cmg: "ref/Cmg_index/bacterial/cmg_pilot_phase3"
       nt: "ref/Cmg_index/nt"
 taxonomy:
   dictFile: "ref/refseq/Assembly_summary/argos_taxdict.tsv"
