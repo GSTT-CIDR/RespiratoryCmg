@@ -20,7 +20,7 @@ def main():
     cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD)
     max_time = utc.localize(datetime.datetime.min)
     # Adapted from WouterDeCoster answer from Biostars
-    sleep_interval = 5 # minutes
+    sleep_interval = 1 # minutes
     fastq_dict = dict()
 
     print("Wait interval set to {} minutes".format(sleep_interval))

@@ -11,9 +11,9 @@ def find_path(exp, sample, barcode):
     path_str = "/data/{}/{}/**/fastq_pass/barcode{}/".format(exp, sample, barcode_dict[str(barcode)])
     path = glob.glob(path_str, recursive=True)
     if len(path) == 0:
-        sys.exit("Error: path error with sample {}. Check variables for experiment, sample or barcode".format(sample))
+        sys.exit(f"Error: path error with sample {exp} {sample} {barcode}. Check variables for experiment, sample or barcode")
     else:
-        return path[0]   
+        return path[-1]   
 	
 #print("Waiting 1 minute before running")
 #time.sleep(60)
