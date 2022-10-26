@@ -6,7 +6,8 @@ rule centrifuge_bacteria:
         raw = "results/{sample}/{time}_hours/centrifuge/centrifuge_raw.tsv",
         report = temp("results/{sample}/{time}_hours/centrifuge/centrifuge_report_raw.tsv")
     shell:
-        """centrifuge -p 4 --mm -x {config[parameters][centrifuge][index][cmg]} -q {input.micro} -S {output.raw} \
+        """
+        centrifuge -p 4 --mm -x {config[parameters][centrifuge][index][cmg]} -q {input.micro} -S {output.raw} \
         --report-file {output.report}
         """
 

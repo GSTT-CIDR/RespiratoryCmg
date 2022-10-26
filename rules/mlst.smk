@@ -2,7 +2,7 @@ rule MLST:
     input:
         fastq = "results/{sample}/{time}_hours/microbial/{sample}_{time}_hours_hg38_removed.fastq",
         read = "results/{sample}/{time}_hours/centrifuge/read_assignments.tsv",
-        top_organisms = "results/{sample}/{time}_hours/amr/centrifuge_top_hits.tsv"
+        targets = "results/{sample}/{time}_hours/amr/centrifuge_top_hits.tsv"
     output:
         profiles = dir("results/{sample}/{time}_hours/mlst/")
     shell:
