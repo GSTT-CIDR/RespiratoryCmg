@@ -1,15 +1,16 @@
 samples: "sample_table.tsv"
-time: [0.5,2,16]
+data_dir: "/home/cja/1-projects/1-CMg/test"
+time: [2]
 abundance_threshold: 1
-cfg_score: 0
+cfg_score: 8000
 targets: "ref/target_organisms.txt"
 parameters:
   hg38:
     index: "ref/hg38/hg38_new.mmi"
   centrifuge:
     index:
-      cmg: "ref/Cmg_index/bacterial/cmg_pilot_phase3"
-      viral: "ref/Cmg_index/viral/cmg_viral"
+      cmg: "ref/centrifuge_idx/bacterial/cmg_pilot_phase3"
+      viral: "ref/centrifuge_idx/viral/cmg_viral"
 taxonomy:
   dictFile: "ref/refseq/Assembly_summary/argos_taxdict.tsv"
   names: "ref/refseq/taxonomy/names.dmp"

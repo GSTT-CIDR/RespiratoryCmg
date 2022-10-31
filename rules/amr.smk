@@ -40,7 +40,7 @@ rule abricate_virulence:
     output:
         vdf = "results/{sample}/{time}_hours/amr/virulence_factor_raw.tsv"
     shell:
-        "abricate --mincov 90 --db vfdb {input.fq} > {outout.vdf}"
+        "abricate --mincov 90 --db vfdb {input.fq} > {output.vdf}"
 
 
 rule parse_virulence_results:

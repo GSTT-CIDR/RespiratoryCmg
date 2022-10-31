@@ -86,7 +86,8 @@ def patient_info(path, id):
                    "SampleID": df["SampleID"].values[0],
                    "Barcode": df["Barcode"].values[0],
                    "SampleType": df["SampleType"].values[0],
-                   "PatientID": df["PatientID"].values[0]}
+                   "PatientID": df["PatientID"].values[0],
+                   "Operator": df["Operator"].values[0]}
     return sample_dict
 
 def is_target(s, target_file = TARGETS):

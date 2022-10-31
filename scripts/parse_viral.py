@@ -105,27 +105,33 @@ def main():
     tax = taxonomy.Taxonomy.from_ncbi(NODES, NAMES)
     df = pd.read_csv(CENTRIFUGE_FILE, sep="\t")
     df = df[df["taxID"] > 0]
-    report_dict, multi_hit_dict = split_hits(df, tax)
-    lca_dict = lca(multi_hit_dict, tax)
-    report_dict.update(lca_dict)
-    read_df = pd.DataFrame.from_dict(report_dict, orient="index").reset_index()
-    read_df.columns = ["readID", "TaxID"]
-    read_df["TaxID"] = read_df["TaxID"].apply(lambda x: x.id if (x is not None) else "NA")
-    read_df["Organism"] = read_df["TaxID"].apply(lambda x: get_name(x,tax)) ## swap around
-    read_df.to_csv(READ_OUTPUT, index=False, sep="\t")
+    if df.shape[0] != 0:
+        report_dict, multi_hit_dict = split_hits(df, tax)
+        lca_dict = lca(multi_hit_dict, tax)
+        report_dict.update(lca_dict)
+        read_df = pd.DataFrame.from_dict(report_dict, orient="index").reset_index()
+        read_df.columns = ["readID", "TaxID"]
+        read_df["TaxID"] = read_df["TaxID"].apply(lambda x: x.id if (x is not None) else "NA")
+        read_df["Organism"] = read_df["TaxID"].apply(lambda x: get_name(x,tax)) ## swap around
+        read_df.to_csv(READ_OUTPUT, index=False, sep="\t")
 
-    report_values = Counter([int(i.id) if i is not None else "No ID" for i in report_dict.values()])
-    del report_values[9606]
-    total_counts = sum(report_values.values())
+        report_values = Counter([int(i.id) if i is not None else "No ID" for i in report_dict.values()])
+        del report_values[9606]
+        total_counts = sum(report_values.values())
 
-    #Report output
-    report_df = pd.DataFrame.from_dict(report_values, orient="index").reset_index()
-    report_df.columns = ["Tax_ID", "Counts"]
-    report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name if (tax.node(str(x)) is not None) else "ARGOS ISOLATE")
-    report_df["Percentage"] = round(report_df["Counts"] / total_counts * 100, 3)
-    report_df = report_df.sort_values(by="Percentage", ascending=False)
-    report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
-    report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
+        #Report output
+        report_df = pd.DataFrame.from_dict(report_values, orient="index").reset_index()
+        report_df.columns = ["Tax_ID", "Counts"]
+        report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name if (tax.node(str(x)) is not None) else "ARGOS ISOLATE")
+        report_df["Percentage"] = round(report_df["Counts"] / total_counts * 100, 3)
+        report_df = report_df.sort_values(by="Percentage", ascending=False)
+        report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
+        report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
+    else:
+        with open(READ_OUTPUT, "w") as out:
+            out.write("No reads")
+        with open(REPORT_OUTPUT, "w") as out:
+            out.write("No report")
 
 if __name__ == "__main__":
     main()

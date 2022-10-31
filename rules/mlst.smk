@@ -4,7 +4,7 @@ rule MLST:
         read = "results/{sample}/{time}_hours/centrifuge/read_assignments.tsv",
         targets = "results/{sample}/{time}_hours/amr/centrifuge_top_hits.tsv"
     output:
-        profiles = dir("results/{sample}/{time}_hours/mlst/")
+        profiles = directory("results/{sample}/{time}_hours/mlst/")
     shell:
         """
         mkdir {output.profiles}
@@ -16,7 +16,7 @@ rule MLST:
         then
             echo "No MLST scheme" > {output.profiles}/${{out}}_mlst.tsv
         else
-            python3 scripts/extract_reads.py -f {input.fastq} -c {input.read} -t "$i" | krocus $path - -o {output.profiles}/${{out}}_mlst.tsv
+            python3 scripts/extract_reads.py -f {input.fastq} -c {input.read} -t "$i" | krocus $path - | tail -n 1 > {output.profiles}/${{out}}_mlst.tsv
         fi
         done < {input.targets}
         """

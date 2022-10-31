@@ -1,12 +1,4 @@
-Lab_ID	Experiment	Sample_ID	Barcode	Sample_Type	Patient_ID
-ES004	220617_LB_run2	LB_run2	8	n/a	n/a
-ES007	220620_LB_run3	LB_run3	5	n/a	n/a
-ES020	220622_LB_run6	LB_run6	5	n/a	n/a
-ES021	220616_LB_run7	LB_run7	8	n/a	n/a
-ES022	220616_LB_run7	LB_run7	9	n/a	n/a
-ES023	220630_LB_run8	LB_run8	5	n/a	n/a
-ES025	220722_LB_run9_10	LB_run9_10	1	n/a	n/a
-ES026	220722_LB_run9_10	LB_run9_10	2	n/a	n/a
-ES027	220722_LB_run9_10	LB_run9_10	3	n/a	n/a
-ES028	220722_LB_run9_10	LB_run9_10	4	n/a	n/a
-ES030	220722_LB_run9_10	LB_run9_10	9	n/a	n/a
+LabID	Experiment	SampleID	Barcode	SampleType	PatientID	Operator
+test1	test_run	test_run	4	Bal	n/a	Mark
+test_jd	test_run	test_run	5	ctrl	n/a	Mark
+test_ntc	test_run	test_run	6	ntc	n/a	Mark
