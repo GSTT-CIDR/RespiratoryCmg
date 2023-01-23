@@ -1,4 +1,5 @@
 samples: "sample_table.tsv"
+move: true 
 data_dir: "/home/cja/1-projects/1-CMg/test"
 time: [2]
 abundance_threshold: 1
@@ -20,6 +21,8 @@ taxonomy:
   speciesTaxMeta: "ref/refseq/Assembly_summary/combined_assembly_summary.txt"
 amr:
   scagaire: "ref/scagaire_genes.txt"
+viral:
+  targets: "ref/viral/viral_targets.tsv"
 mlst:
   directory: "ref/pubmlst/"
   list: "ref/pubmlst/mlst_organisms.tsv"

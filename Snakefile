@@ -18,10 +18,16 @@ def find_path(exp, sample, barcode, data_dir):
 #print("Waiting 1 minute before running")
 #time.sleep(60)
 data_dir = config["data_dir"]
-sample_table = pd.read_csv(config["samples"], sep="\t").set_index("LabID")
-sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.SampleID, x.Barcode, data_dir), axis = 1)
+if config["move"] is True:
+    sample_table = pd.read_csv(config["samples"], sep="\t").set_index("LabID")
+    sample_table["path"] = sample_table.apply(lambda x: find_path(x.Experiment, x.SampleID, x.Barcode, data_dir), axis = 1)
+    SAMPLES = sample_table.index.values
 
-SAMPLES = sample_table.index.values
+else:
+    sample_table = pd.read_csv(config["samples"], sep="\t").set_index("LabID")
+    sample_table["path"] = sample_table.apply(lambda x: f"{data_dir}/{x.Experiment}/{x.SampleID}.fastq", axis=1)
+    SAMPLES = sample_table.index.values
+    
 
 TIME = config["time"]# move to config file
 
@@ -41,6 +47,6 @@ rule all:
     input:
         expand("reports/{sample}/{sample}_{time}_hours_report.pdf", sample = SAMPLES, time = TIME),
         # expand("results/{sample}/{time}_hours/transfer/transferred.txt", sample = SAMPLES, time = TIME),
-        expand("results/{sample}/{time}_hours/viral/centrifuge_viral_report.tsv", sample = SAMPLES, time = TIME),
+        expand("results/{sample}/{time}_hours/viral/viral_target_report.tsv", sample = SAMPLES, time = TIME),
         expand("results/{sample}/{time}_hours/mlst/", sample= SAMPLES, time= TIME),
         expand("results/{sample}/{time}_hours/amr/virulence_factor_summary.tsv", sample=SAMPLES, time=TIME)

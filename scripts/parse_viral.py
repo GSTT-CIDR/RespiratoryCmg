@@ -6,9 +6,11 @@ from collections import Counter
 # SNAKEMAKE ARGUMENTS
 NODES = snakemake.config["taxonomy"]["nodes"]
 NAMES = snakemake.config["taxonomy"]["names"]
+TARGETS = snakemake.config["viral"]["targets"]
 CENTRIFUGE_FILE = snakemake.input.raw
 READ_OUTPUT = snakemake.output.read
 REPORT_OUTPUT = snakemake.output.report
+TARGETS_OUTPUT = snakemake.output.targets
 
 # NODES = "ref/refseq/taxonomy/nodes.dmp"
 # NAMES = "ref/refseq/taxonomy/names.dmp"
@@ -99,6 +101,15 @@ def get_name(taxID, tax):
     else:
         return name.name
 
+def get_genus(taxID,tax):
+    try:
+        genus = tax.parent(str(taxID), at_rank="genus")
+        return int(genus.id)
+    except:
+        return "None"
+
+
+
      
 
 def main():
@@ -121,16 +132,28 @@ def main():
 
         #Report output
         report_df = pd.DataFrame.from_dict(report_values, orient="index").reset_index()
-        report_df.columns = ["Tax_ID", "Counts"]
-        report_df["Organism"] = report_df["Tax_ID"].apply(lambda x: tax.node(str(x)).name if (tax.node(str(x)) is not None) else "ARGOS ISOLATE")
+        report_df.columns = ["TaxID", "Counts"]
+        report_df["Organism"] = report_df["TaxID"].apply(lambda x: tax.node(str(x)).name if (tax.node(str(x)) is not None) else "ARGOS ISOLATE")
         report_df["Percentage"] = round(report_df["Counts"] / total_counts * 100, 3)
         report_df = report_df.sort_values(by="Percentage", ascending=False)
-        report_df = report_df[["Organism", "Tax_ID", "Counts", "Percentage"]]
+        report_df = report_df[["Organism", "TaxID", "Counts", "Percentage"]]
         report_df.to_csv(REPORT_OUTPUT, index=False, sep="\t")
+
+        #Target output
+        target = pd.read_csv(TARGETS, sep="\t")
+        target_ids = target["TaxID"].values.tolist()
+        report_df["Genus"] = report_df["TaxID"].apply(lambda x: get_genus(x, tax))
+        target_df = report_df[report_df["Genus"].isin(target_ids)]
+        target_df.to_csv(TARGETS_OUTPUT, index=False, sep="\t")
+        
+
+
     else:
         with open(READ_OUTPUT, "w") as out:
             out.write("No reads")
         with open(REPORT_OUTPUT, "w") as out:
+            out.write("No report")
+        with open(TARGETS_OUTPUT, "w") as out:
             out.write("No report")
 
 if __name__ == "__main__":

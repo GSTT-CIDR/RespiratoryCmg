@@ -5,6 +5,7 @@ from dateutil.parser import parse as dparse
 import pytz
 import time
 import pyfastx
+import shutil
 utc=pytz.UTC	
 gb = pytz.timezone("GB")
 
@@ -13,8 +14,9 @@ THRESHOLD = float(snakemake.wildcards.time)
 FQ_DIR = snakemake.input.seq_dir
 OUTFILE = snakemake.output.analysis
 LOGFILE = snakemake.log[0]
+MOVE = snakemake.config["move"]
 
-def main():
+def transfer():
     read_files = []
     start_time= gb.localize(datetime.datetime.now())
     cutoff_time = start_time + datetime.timedelta(hours=THRESHOLD)
@@ -28,7 +30,7 @@ def main():
     while KEEP_GOING:
         current_time = gb.localize(datetime.datetime.now())
         time.sleep(sleep_interval * 60)
-        file_list = glob.glob("{}/*".format(FQ_DIR))
+        file_list = glob.glob(f"{FQ_DIR}/*")
         to_read = [i for i in file_list if i not in read_files]
         print("Processing files {}".format(to_read))
         for file in to_read:
@@ -69,6 +71,17 @@ def main():
     with open(LOGFILE, "w") as log:
         for f in read_files:
             log.write("{}\n".format(f))
+
+def copy():
+    shutil.copyfile(FQ_DIR, OUTFILE)
+    with open(LOGFILE, "w") as log:
+        log.write(f"{FQ_DIR} - transferred")
+
+def main():
+    if MOVE is True:
+        transfer()
+    else:
+        copy()
 
 if __name__ == "__main__":
     main()

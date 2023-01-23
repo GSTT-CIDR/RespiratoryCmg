@@ -21,6 +21,7 @@ SAMPLE = snakemake.wildcards.sample
 INTERVAL = float(snakemake.wildcards.time)
 CFG_PATH = snakemake.input.centrifuge
 CFG_RAW_PATH = snakemake.input.centrifuge_raw
+VIRAL_PATH = snakemake.input.viral
 AMR_SUMMARY = snakemake.input.amr_summary
 AMR_REPORT = snakemake.input.amr_report
 QC_PATH = snakemake.input.qc
@@ -99,7 +100,7 @@ def is_target(s, target_file = TARGETS):
         return ["color: black"] * 3
 
 # Change this from hardcoding threshold
-def cfg_to_html(path, threshold = THRESHOLD, target_file = TARGETS):
+def cfg_to_html(path, threshold = THRESHOLD):
     exceptions = "Aspergillus|Candida"
     cfg_dict = dict()
     df = pd.read_csv(path, sep="\t")
@@ -180,6 +181,11 @@ def amr_report(path, summary_path):
     else:
         return "No Results"
 
+def viral_report(path):
+    viral_dict = dict()
+    df = pd.read_csv(path,sep="\t", usecols=["Organism", "Counts"])
+    viral_dict["viral_report"] = df.to_html(classes="table table-striped", border=0, justify="left", index=False)
+    return viral_dict
 
 report_dict = {"time": str(INTERVAL) + " hrs",
                "title": "Clinical metagenomics report",
@@ -188,6 +194,7 @@ report_dict = {"time": str(INTERVAL) + " hrs",
 report_dict.update(samtools_stats(SAMTOOLS_STAT))
 report_dict.update(patient_info(SAMPLE_TABLE, SAMPLE))
 report_dict.update(cfg_to_html(CFG_PATH))
+report_dict.update(viral_report(VIRAL_PATH))
 report_dict.update(summary_qc(QC_PATH))
 report_dict.update(unclassified_reads(CFG_RAW_PATH))
 report_dict["amr_summary"] = amr_summary(AMR_SUMMARY)

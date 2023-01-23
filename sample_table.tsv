@@ -1,4 +1,4 @@
 LabID	Experiment	SampleID	Barcode	SampleType	PatientID	Operator
-test1	test_run	test_run	4	Bal	n/a	Mark
-test_jd	test_run	test_run	5	ctrl	n/a	Mark
-test_ntc	test_run	test_run	6	ntc	n/a	Mark
+MIC01	LB_pseud	MIC01	4	bal	n/a	Mark
+MIC02	LB_pseud	MIC02	5	bal	n/a	Mark
+MIC03	LB_pseud	MIC03	6	bal	n/a	Mark
