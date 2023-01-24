@@ -149,12 +149,10 @@ def main():
 
 
     else:
-        with open(READ_OUTPUT, "w") as out:
-            out.write("No reads")
-        with open(REPORT_OUTPUT, "w") as out:
-            out.write("No report")
-        with open(TARGETS_OUTPUT, "w") as out:
-            out.write("No report")
+        fail_df = pd.DataFrame({"Organisms": "N/A", "TaxID": "N/A", "Counts": "N/A": "Percentage": "N/A"})
+        fail_df.to_csv(READ_OUTPUT, sep="\t")
+        fail_df.to_csv(REPORT_OUTPUT, sep="\t")
+        fail_df.to_csv(TARGETS_OUTPUT, sep="\t")
 
 if __name__ == "__main__":
     main()
