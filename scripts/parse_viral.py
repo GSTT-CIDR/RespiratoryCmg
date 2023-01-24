@@ -150,9 +150,9 @@ def main():
 
     else:
         fail_df = pd.DataFrame({"Organism": ["N/A"], "TaxID": ["N/A"], "Counts": ["N/A"], "Percentage": ["N/A"]})
-        fail_df.to_csv(READ_OUTPUT, sep="\t")
-        fail_df.to_csv(REPORT_OUTPUT, sep="\t")
-        fail_df.to_csv(TARGETS_OUTPUT, sep="\t")
+        fail_df.to_csv(READ_OUTPUT, sep="\t", index=False)
+        fail_df.to_csv(REPORT_OUTPUT, sep="\t", index=False)
+        fail_df.to_csv(TARGETS_OUTPUT, sep="\t", index=False)
 
 if __name__ == "__main__":
     main()
